@@ -3,6 +3,7 @@ import Character from "./character.js";
 export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg){
         super(scene, x, y, life, speed, atkSpeed, atkDmg)
+        this.inBattle = false;
     }
     
     playerController(){
@@ -31,7 +32,17 @@ export default class Player extends Character{
         }
       } 
     }
+
+    changeSpeed(){
+        //la cantidad en la que aumente la velocidad la testearemos
+        this.speed *= 2;
+        this.atkSpeed *=2;
+    }
+
     preUpdate() {
         this.playerController();
+        if(!this.inBattle){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
+          this.changeSpeed();
+        }
     }
 }
