@@ -4,6 +4,7 @@ export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg){
         super(scene, x, y, life, speed, atkSpeed, atkDmg)
         this.inBattle = false;
+        this.lifeFlag = true;
     }
     
     playerController(){
@@ -39,10 +40,24 @@ export default class Player extends Character{
         this.atkSpeed *=2;
     }
 
+    reduceEnergy(){
+      this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
+      flag = false;
+      window.setInterval(control, 1000);    //es el invoke de javascript en milisegundos
+    }
+
+    control(){
+      flag = true;
+    }
+
     preUpdate() {
         this.playerController();
         if(!this.inBattle){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
           this.changeSpeed();
         }
+        if (this.lifeFlag){
+          this.reduceEnergy();
+        }
+      
     }
 }
