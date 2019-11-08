@@ -3,8 +3,9 @@ import Character from "./character.js";
 export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg){
         super(scene, x, y, life, speed, atkSpeed, atkDmg)
-        this.inBattle = false;
+        this.inBattle = true;
         this.lifeFlag = true;
+        this.speedy = false;
     }
     
     playerController(){
@@ -33,31 +34,32 @@ export default class Player extends Character{
         }
       } 
     }
+    
 
-    changeSpeed(){
+    changeSpeed(spd){
         //la cantidad en la que aumente la velocidad la testearemos
-        this.speed *= 2;
-        this.atkSpeed *=2;
+        this.speed += spd;
+        this.speedy = true;
     }
 
     reduceEnergy(){
       this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
-      flag = false;
-      window.setInterval(control, 1000);    //es el invoke de javascript en milisegundos
+      this.lifeFlag = false;
+      console.log(this.health);
     }
 
     control(){
-      flag = true;
+      this.lifeFlag = true;
+      console.log("a");
     }
 
     preUpdate() {
         this.playerController();
-        if(!this.inBattle){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
-          this.changeSpeed();
+        if(!this.inBattle && !this.speedy){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
+          this.changeSpeed(this.speed);
         }
         if (this.lifeFlag){
           this.reduceEnergy();
         }
-      
     }
 }

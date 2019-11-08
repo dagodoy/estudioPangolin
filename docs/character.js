@@ -4,12 +4,12 @@ export default class Character extends Phaser.GameObjects.Sprite {
     super(scene, x, y, 'character');
 
     this.speed = speed;
-    //this.label = this.scene.add.text(10, 10);
 
     this.health = life;
     this.maxHealth = life;
     this.atkSpeed = atkSpeed;
     this.atkDmg = atkDmg;
+    
 
 
     this.scene.add.existing(this);
@@ -19,8 +19,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
     this.cursors = this.scene.input.keyboard.createCursorKeys();
   }
   reduceHealth(damage){
-    health -= damage;
-    if (health < 0) health = 0;
+    this.health -= damage;
+    if (this.health < 0) health = 0;
   }
   heal(healing){
     health += healing;
