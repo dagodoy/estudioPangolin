@@ -6,6 +6,8 @@ export default class Player extends Character{
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
+        this.lifeDelay = 1000;
+        this.lifeCD = 0;
     }
     
     playerController(){
@@ -20,7 +22,6 @@ export default class Player extends Character{
           this.body.setVelocityX(0);        
         }
       }
-  
   
       if (this.cursors.up.isDown) {
           this.body.setVelocityY(-this.speed);
@@ -44,22 +45,18 @@ export default class Player extends Character{
 
     reduceEnergy(){
       this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
-      this.lifeFlag = false;
-      console.log(this.health);
+      //this.lifeFlag = false;
     }
 
-    control(){
-      this.lifeFlag = true;
-      console.log("a");
-    }
-
-    preUpdate() {
+    preUpdate(t) {
         this.playerController();
         if(!this.inBattle && !this.speedy){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
           this.changeSpeed(this.speed);
         }
-        if (this.lifeFlag){
+        if (t - this.lifeCD > this.lifeDelay){
           this.reduceEnergy();
+          this.lifeCD = t;
+          console.log(this.health);
         }
     }
 }

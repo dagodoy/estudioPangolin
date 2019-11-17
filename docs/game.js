@@ -19,11 +19,9 @@ export default class Game extends Phaser.Scene {
     this.wall = new Wall (this, 500, 500);
     this.physics.add.collider(this.player, this.wall);
     this.physics.add.collider(this.wall, this.enemy);
-    timedEvent = this.time.addEvent({ delay: 1000, callback: this.player.control(),
-      callbackScope: this});
   }
 
   update(time, delta) {    
-    console.log('Event.progress: ' + timedEvent.getProgress().toString().substr(0, 4));
+
   }
 }
