@@ -1,7 +1,7 @@
 
-export default class Character extends Phaser.GameObjects.Sprite {
+export default class Character extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, life, speed, atkSpeed, atkDmg) {
-    super(scene, x, y, 'character');
+    super(scene.matter.world, x, y, 'character');
 
     this.speed = speed;
 
@@ -13,10 +13,10 @@ export default class Character extends Phaser.GameObjects.Sprite {
     this.cursors = this.scene.input.keyboard.createCursorKeys();
     
     this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this.body.setCollideWorldBounds();
+    this.scene.matter.world.add(this);
+    this.setFixedRotation();
 
-    
+
   }
   reduceHealth(damage){
     this.health -= damage;

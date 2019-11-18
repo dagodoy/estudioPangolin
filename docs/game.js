@@ -2,26 +2,38 @@ import Player from "./player.js";
 import Enemy from "./enemy.js";
 import Wall from "./wall.js";
 
-var timedEvent;
 export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: 'main' });
   }
   
   preload() {  
+    this.c1 = this.matter.world.nextCategory();
+    this.c2 = this.matter.world.nextCategory();
     this.load.image('character', 'favicon.png');
     this.load.image('wall', 'player.png');
   }
 
   create() {
-    this.player = new Player(this, 900, 400, 100, 300, 1, 10);
-    this.enemy = new Enemy(this, 1000, 500, 100, 100, 1, 10);
+    this.player = new Player(this, 900, 400, 100, 10, 1, 10);
+    this.enemy = new Enemy(this, 1000, 500, 100, 3, 1, 10);
     this.wall = new Wall (this, 500, 500);
-    this.physics.add.collider(this.player, this.wall);
-    this.physics.add.collider(this.wall, this.enemy);
+    this.player.setCollisionCategory(this.c1);
+    this.player.hitbox.setCollisionCategory(this.c2);
+    this.wall.setCollisionCategory(this.c2);
+    this.enemy.setCollidesWith([this.c2]);
+    this.matter.world.on('collisionstart', function(event){
+        let pairs = event.pairs;
+        // console.log(pairs[0].bodyA.label);
+        // console.log(pairs[0].bodyB.label);
+        if (pairs[0].bodyA.label === 'playerHitbox' && pairs[0].bodyB.label === 'enemy') {//pairs[0].bodyB.enemy.reduceHealth(5); console.log(pairs[0].bodyB.health)
+        }
+
+    });
   }
 
   update(time, delta) {    
 
   }
+
 }

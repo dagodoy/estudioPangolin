@@ -1,12 +1,12 @@
 import Player from "./player.js";
 
-export default class Wall extends Phaser.GameObjects.Sprite {
+export default class Wall extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y) {
-      super(scene, x, y, 'wall');
+      super(scene.matter.world, x, y, 'wall');
 
       this.scene.add.existing(this);
-      this.scene.physics.add.existing(this);
-      this.body.immovable = true;
+      this.scene.matter.world.add(this);
+      this.body.isStatic = true;
     }
   }
   
