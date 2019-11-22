@@ -12,24 +12,14 @@ export default class Player extends Character{
         this.lifeDelay = 1000;
         this.lifeCD = 0;
 
-        this.attackDelay = 100;
-        this.comboDelay = 1000;
+        this.attackDelay = 1000;
+        this.comboDelay = -900;
         this.comboCount = 0;
         this.attackCD = 0;
         this.attackControl = false;
 
-
-        this.hitbox = this.scene.matter.add.image(200, 50, null);
-        this.hitbox.setBody({
-          type: 'rectangle',
-          width:40,
-          height:80
-        })
-        this.hitbox.body.active = false;
-        this.hitbox.body.isSensor = true;
-
         this.body.label = 'player';
-        this.hitbox.body.label = 'playerHitbox';
+        this.hitbox.label = 'playerHitbox';
     }
     
     playerController(){
@@ -58,12 +48,14 @@ export default class Player extends Character{
           this.setVelocityY(0);
         }
       }
+
+
       if (this.cursors.space.isDown && this.attackControl){     
-        this.hitbox.body.active = true;
+        this.hitbox.active = true;
         this.attackControl = false;
       }
       else{
-        this.hitbox.body.active = false;
+        this.hitbox.active = false;
       }
     }
     
@@ -80,8 +72,8 @@ export default class Player extends Character{
 
     preUpdate(t) {
         this.playerController();
-        this.hitbox.body.position.x = this.body.position.x + (50 * this.facing);
-        this.hitbox.body.position.y = this.body.position.y;
+        console.log(this.hitbox.active);  
+        this.moveHitbox();
         if(!this.inBattle && !this.speedy){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
           this.changeSpeed(this.speed);
         }
@@ -89,15 +81,16 @@ export default class Player extends Character{
           this.reduceEnergy();
           this.lifeCD = t;
         }
-        if (t - this.attackCD > this.comboDelay){    //Controla el cooldown del ataque
+        if (t - this.attackCD + this.comboDelay > this.attackDelay){    //Controla el cooldown del ataque
           this.comboCount++;
           this.attackControl = true;
-          if (this.comboCount < 2){
-            this.attackCD = t - (this.comboDelay - this.attackDelay);           
+          if (this.comboCount > 2){
+            this.comboDelay = -900;
           } 
           else{
-            this.attackCD = t;
+            this.comboDelay = 0;
           }
+          this.attackCD = t;
         }
     }
 }

@@ -16,6 +16,9 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
     this.scene.matter.world.add(this);
     this.setFixedRotation();
 
+    this.hitbox = this.scene.matter.add.rectangle(200, 50, 80, 80, null);
+    this.hitbox.active = false;
+    this.hitbox.isSensor = true;
 
   }
   reduceHealth(damage){
@@ -25,5 +28,9 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
   heal(healing){
     this.health += healing;
     if (this.health > maxHealth) this.health = maxHealth;
+  }
+  moveHitbox(){
+    this.hitbox.position.x = this.body.position.x;
+    this.hitbox.position.y = this.body.position.y;
   }
 }
