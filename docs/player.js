@@ -1,8 +1,8 @@
 import Character from "./character.js";
 
 export default class Player extends Character{
-    constructor(scene, x, y, life, speed, atkSpeed, atkDmg){
-        super(scene, x, y, life, speed, atkSpeed, atkDmg)
+    constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
+        super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet)
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
@@ -20,6 +20,9 @@ export default class Player extends Character{
 
         this.body.label = 'player';
         this.hitbox.label = 'playerHitbox';
+
+        
+
     }
     
     playerController(){

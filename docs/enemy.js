@@ -1,8 +1,8 @@
 import Character from "./character.js";
 
 export default class Enemy extends Character{
-    constructor(scene, x, y, life, speed, atkSpeed, atkDmg){
-        super(scene, x, y, life, speed, atkSpeed, atkDmg);
+    constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
+        super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet);
         this.body.label = 'enemy';
         this.hitbox.label = 'enemyHitbox';
         this.range = this.scene.matter.add.circle(200, 50,50,  null);

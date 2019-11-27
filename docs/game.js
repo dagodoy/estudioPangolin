@@ -12,12 +12,14 @@ export default class Game extends Phaser.Scene {
     this.c2 = this.matter.world.nextCategory();
     this.load.image('character', 'favicon.png');
     this.load.image('wall', 'player.png');
+    this.load.spritesheet('vampireIdle', 'vampireIdle.png', { frameWidth: 13, frameHeight: 20});
   }
 
   create() {
-    this.player = new Player(this, 900, 400, 100, 10, 1, 10);
-    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10);
+    this.player = new Player(this, 900, 400, 100, 10, 1, 10, 'character');
+    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'character');
     this.wall = new Wall (this, 500, 500);
+
     this.player.setCollisionCategory(this.c1);
     //this.player.hitbox.setCollisionCategory(this.c2);
     this.wall.setCollisionCategory(this.c2);

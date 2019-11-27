@@ -1,8 +1,9 @@
 
 export default class Character extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, x, y, life, speed, atkSpeed, atkDmg) {
-    super(scene.matter.world, x, y, 'character');
-
+  constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet) {
+    super(scene.matter.world, x, y, spriteSheet);
+  
+    
     this.speed = speed;
 
     this.health = life;
