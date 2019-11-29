@@ -11,7 +11,12 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
     this.atkSpeed = atkSpeed;
     this.atkDmg = atkDmg;
 
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
+    this.cursors = this.scene.input.keyboard;
+    this.w = this.cursors.addKey("w");
+    this.a = this.cursors.addKey("a");
+    this.s = this.cursors.addKey("s");
+    this.d = this.cursors.addKey("d");
+    console.log(this.cursors);
     
     this.scene.add.existing(this);
     this.scene.matter.world.add(this);

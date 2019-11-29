@@ -33,12 +33,12 @@ export default class Player extends Character{
     }
     
     playerController(){
-      if (this.cursors.left.isDown) {
+      if (this.a.isDown) {
         this.setVelocityX(-this.speed);
         this.facing = -1;
       }
       else {
-        if (this.cursors.right.isDown) {
+        if (this.d.isDown) {
           this.setVelocityX(this.speed);
           this.facing = 1;
         }
@@ -47,11 +47,11 @@ export default class Player extends Character{
         }
       }
   
-      if (this.cursors.up.isDown) {
+      if (this.w.isDown) {
           this.setVelocityY(-this.speed);
       }
       else {
-        if (this.cursors.down.isDown) {
+        if (this.s.isDown) {
           this.setVelocityY(this.speed);
         }
         else {
@@ -60,7 +60,7 @@ export default class Player extends Character{
       }
 
 
-      if (this.cursors.space.isDown && this.attackControl){     
+      if (this.scene.input.activePointer.primaryDown && this.attackControl){     
         this.hitbox.active = true;
         this.attackControl = false;
         console.log("ataque" + this.comboCount);
@@ -92,7 +92,7 @@ export default class Player extends Character{
       if(!this.attackControl){
         if (t - this.attackCD > this.attackDelay){    //Controla el cooldown del ataque
           if (this.comboCount === this.comboDuration){
-            this.attackDelay = attackDelayBase;
+            this.attackDelay = this.attackDelayBase;
             this.comboCount = 0;
           } 
           this.comboCount++;
@@ -112,7 +112,7 @@ export default class Player extends Character{
         }   
         this.attackCD = t;
       }
-      if (comboCount === this.ComboDuration - 1) this.atkDmg = this.atkFinisher;
+      if (this.comboCount === this.ComboDuration - 1) this.atkDmg = this.atkFinisher;
       else this.atkDmg = this.startingDmg;
     }
 
