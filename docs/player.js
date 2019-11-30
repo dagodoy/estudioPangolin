@@ -3,9 +3,19 @@ import Character from "./character.js";
 export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
         super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet)
+
+        this.scene.anims.create({
+          key: 'idle',
+          frames: this.scene.anims.generateFrameNumbers('vampireSheet', { start: 0, end: 9}),
+          frameRate: 6,
+          repeat: -1
+        });
+        this.play('idle');
+  
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
+
 
         this.facing = 1;
 
