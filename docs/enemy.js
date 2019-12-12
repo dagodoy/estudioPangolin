@@ -4,10 +4,10 @@ export default class Enemy extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
         super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet);
         this.body.label = 'enemy';
-        this.hitbox.label = 'enemyHitbox';
-        this.range = this.scene.matter.add.circle(200, 50,50,  null);
-        this.range.active = false;
-        this.range.isSensor = true;
+        this.hitbox.body.label = 'enemyHitbox';
+        //this.range = this.scene.matter.add.circle(200, 50,50,  null);
+        //this.range.active = false;
+        //this.range.isSensor = true;
     }
     moveTowards(x, y){
         var alpha = Math.atan((y-this.y)/(x-this.x));
@@ -22,7 +22,7 @@ export default class Enemy extends Character{
     }
 
     preUpdate() {
-        this.moveHitbox();   
+        this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.moveTowards(this.scene.player.x, this.scene.player.y);
     }
 }

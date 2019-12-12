@@ -39,7 +39,7 @@ export default class Player extends Character{
         this.atkFinisher = 2*atkDmg;
 
         this.body.label = 'player';
-        this.hitbox.label = 'playerHitbox';
+        this.hitbox.body.label = 'playerHitbox';
     }
     
     playerController(){
@@ -116,13 +116,13 @@ export default class Player extends Character{
         this.comboCD = t;
       }
       else{
-        if (this.comboCount < this.ComboDuration && t-this.comboCD > this.comboResetter){
+        if (this.comboCount - 1 < this.comboDuration && t-this.comboCD > this.comboResetter){
           this.comboCount = 1;
           this.comboCD = t;
         }   
         this.attackCD = t;
       }
-      if (this.comboCount === this.ComboDuration - 1) this.atkDmg = this.atkFinisher;
+      if (this.comboCount === this.comboDuration - 1) this.atkDmg = this.atkFinisher;
       else this.atkDmg = this.startingDmg;
     }
 
@@ -132,10 +132,10 @@ export default class Player extends Character{
 
     preUpdate(t) {
         this.playerController();
-        console.log(this.hitbox.active);  
-        this.moveHitbox();
         this.makeSpeedy();
         this.loseLife(t);
         this.attackSystem(t);
+        this.hitbox.moveHitbox(this.scene.input.x - this.body.position.x,
+           this.scene.input.y - this.body.position.y);   
     }
 }
