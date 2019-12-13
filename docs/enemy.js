@@ -22,10 +22,10 @@ export default class Enemy extends Character{
         frameRate: 6,
         repeat: -1});
         this.body.label = 'enemy';
-        this.hitbox.label = 'enemyHitbox';
-        this.range = this.scene.matter.add.circle(200, 50,50,  null);
-        this.range.active = false;
-        this.range.isSensor = true;
+        this.hitbox.body.label = 'enemyHitbox';
+        //this.range = this.scene.matter.add.circle(200, 50,50,  null);
+        //this.range.active = false;
+        //this.range.isSensor = true;
     }
 
 
@@ -43,9 +43,10 @@ export default class Enemy extends Character{
         }
     }
 
+
     preUpdate(t, d) {
-        super.preUpdate(t, d);
-        this.moveHitbox();   
+        super.preUpdate(t,d);
+        this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.moveTowards(this.scene.player.x, this.scene.player.y);
     }
 }
