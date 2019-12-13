@@ -12,18 +12,20 @@ export default class Game extends Phaser.Scene {
     this.c2 = this.matter.world.nextCategory();
     this.load.image('character', 'favicon.png');
     this.load.image('wall', 'player.png');
-    this.load.spritesheet('vampireSheet', 'vampireSheet.png', { frameWidth: 64, frameHeight: 64});
+    this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
+    this.load.atlas('enemy', 'enemyatlas.png', 'enemyatlas_atlas.json');
     this.load.image('ForestTile200', 'ForestTile200.png');
     this.load.tilemapTiledJSON('map', 'map.json');
+
 
   }
 
   create() {
-   
-    this.player = new Player(this, 900, 400, 100, 10, 1, 10, 'vampireSheet');
-    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'character');
-    this.wall = new Wall (this, 500, 500);
+    
 
+    this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
+    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
+    this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
 
     this.player.setCollisionCategory(this.c1);
