@@ -29,7 +29,7 @@ export default class Game extends Phaser.Scene {
     this.input.mouse.capture = true;
 
     this.player.setCollisionCategory(this.c1);
-    //this.player.hitbox.setCollisionCategory(this.c2);
+    this.player.hitbox.setCollisionCategory(this.c2);
     this.wall.setCollisionCategory(this.c2);
     
     this.enemy.setCollidesWith([this.c2]);
@@ -37,9 +37,9 @@ export default class Game extends Phaser.Scene {
     this.matter.world.on('collisionstart', function(event){ 
         let pairs = event.pairs;
         console.log(pairs[0]);
-        //console.log(event);
-        //console.log(pairs[0].bodyA.label);
-        //console.log(pairs[0].bodyB.label);
+        console.log(event);
+        console.log(pairs[0].bodyA.label);
+        console.log(pairs[0].bodyB.label);
         if (pairs[0].bodyA.label === 'playerHitbox' && pairs[0].bodyB.label === 'enemy') {
           pairs[0].bodyB.gameObject.reduceHealth(5);
           console.log(pairs[0].bodyB.gameObject.health);
