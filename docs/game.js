@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene {
     
 
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
-    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
+    this.enemy = new Enemy(this, 1000, 500, 100, 4, 1, 10, 'enemy');
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
 

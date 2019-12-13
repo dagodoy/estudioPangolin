@@ -3,7 +3,7 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet) {
     super(scene.matter.world, x, y, spriteSheet);
   
-    
+    this.onPlayAnim = 'none';
     this.speed = speed;
 
     this.health = life;
@@ -34,9 +34,11 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
     if (this.health > maxHealth) this.health = maxHealth;
   }
 
-  moveHitbox(){
-    this.hitbox.position.x = this.body.position.x;
-    this.hitbox.position.y = this.body.position.y;
+  playAnimation(anim){
+    if (this.onPlayAnim != anim){
+      this.play(anim);
+      this.onPlayAnim = anim;
+    }
   }
 
 

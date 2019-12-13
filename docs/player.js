@@ -23,7 +23,6 @@ export default class Player extends Character{
         frameRate: 6,
         repeat: -1});
 
-        this.onPlayAnim = 'none';
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
@@ -57,17 +56,17 @@ export default class Player extends Character{
       if (this.a.isDown) {
         this.setVelocityX(-this.speed);
         this.facing = -1;
-        this.playAnimation('vamp_left_mov');
+        super.playAnimation('vamp_left_mov');
       }
       else {
         if (this.d.isDown) {
           this.setVelocityX(this.speed);
           this.facing = 1;
-          this.playAnimation('vamp_right_mov');
+          super.playAnimation('vamp_right_mov');
         }
         else {
           this.setVelocityX(0);  
-          this.playAnimation('vamp_idle');
+          super.playAnimation('vamp_idle');
         }
       }
   
@@ -94,13 +93,7 @@ export default class Player extends Character{
       }
     }
     
-    playAnimation(anim){
-      if (this.onPlayAnim != anim){
-        this.play(anim);
-        console.log(this);
-        this.onPlayAnim = anim;
-      }
-    }
+    
     changeSpeed(spd){
         //la cantidad en la que aumente la velocidad la testearemos
         this.speed += spd;
@@ -154,7 +147,7 @@ export default class Player extends Character{
       super.preUpdate(t, d);
         this.playerController(t); 
         console.log(this.hitbox.active);  
-        this.moveHitbox();
+        this.hitbox.moveHitbox();
         this.makeSpeedy();
         this.loseLife(t);
         this.attackSystem(t);
