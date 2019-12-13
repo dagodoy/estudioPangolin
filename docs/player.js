@@ -3,24 +3,36 @@ import Character from "./character.js";
 export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
         super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet)
+        
+      //idle
+      this.scene.anims.create({
+        key: 'vamp_idle', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 0, end:9}),
+        frameRate: 6,
+        repeat: -1});
 
-        this.scene.anims.create({
-          key: 'idle',
-          frames: this.scene.anims.generateFrameNumbers('vampireSheet', { start: 0, end: 9}),
-          frameRate: 6,
-          repeat: -1
-        });
-        this.play('idle');
-  
+      //movimiento
+      this.scene.anims.create({
+        key: 'vamp_right_mov', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 12, end: 17}),
+        frameRate: 6,
+        repeat: -1});
+      this.scene.anims.create({
+        key: 'vamp_left_mov', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 96, end:101}),
+        frameRate: 6,
+        repeat: -1});
+
+        this.onPlayAnim = 'none';
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
-
 
         this.facing = 1;
 
         this.lifeDelay = 1000;
         this.lifeCD = 0;
+        this.animCD = 0;
 
         this.attackControl = false;
 
@@ -41,19 +53,21 @@ export default class Player extends Character{
         this.body.label = 'player';
         this.hitbox.label = 'playerHitbox';
     }
-    
     playerController(){
       if (this.a.isDown) {
         this.setVelocityX(-this.speed);
         this.facing = -1;
+        this.playAnimation('vamp_left_mov');
       }
       else {
         if (this.d.isDown) {
           this.setVelocityX(this.speed);
           this.facing = 1;
+          this.playAnimation('vamp_right_mov');
         }
         else {
-          this.setVelocityX(0);        
+          this.setVelocityX(0);  
+          this.playAnimation('vamp_idle');
         }
       }
   
@@ -80,7 +94,13 @@ export default class Player extends Character{
       }
     }
     
-
+    playAnimation(anim){
+      if (this.onPlayAnim != anim){
+        this.play(anim);
+        console.log(this);
+        this.onPlayAnim = anim;
+      }
+    }
     changeSpeed(spd){
         //la cantidad en la que aumente la velocidad la testearemos
         this.speed += spd;
@@ -130,8 +150,9 @@ export default class Player extends Character{
       this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
     }
 
-    preUpdate(t) {
-        this.playerController();
+    preUpdate(t, d) {
+      super.preUpdate(t, d);
+        this.playerController(t); 
         console.log(this.hitbox.active);  
         this.moveHitbox();
         this.makeSpeedy();

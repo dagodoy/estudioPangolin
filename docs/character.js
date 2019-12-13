@@ -39,4 +39,5 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
     this.hitbox.position.x = this.body.position.x;
     this.hitbox.position.y = this.body.position.y;
   }
+
 }
