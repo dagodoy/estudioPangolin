@@ -145,13 +145,11 @@ export default class Player extends Character{
 
     preUpdate(t, d) {
       super.preUpdate(t, d);
-        this.playerController(t); 
-        console.log(this.hitbox.active);  
-        this.hitbox.moveHitbox();
-        this.makeSpeedy();
-        this.loseLife(t);
-        this.attackSystem(t);
-        this.hitbox.moveHitbox(this.scene.input.x - this.body.position.x,
-           this.scene.input.y - this.body.position.y);   
+      this.playerController(t); 
+      this.makeSpeedy();
+      this.loseLife(t);
+      this.attackSystem(t);
+      this.hitbox.moveHitbox(this.scene.input.x - this.body.position.x,
+          this.scene.input.y - this.body.position.y);  
     }
 }

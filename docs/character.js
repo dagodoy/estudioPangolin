@@ -38,6 +38,4 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
       this.onPlayAnim = anim;
     }
   }
-
-
 }

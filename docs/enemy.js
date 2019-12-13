@@ -39,7 +39,7 @@ export default class Enemy extends Character{
 
     preUpdate(t, d) {
         super.preUpdate(t,d);
-        this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
+        //this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.moveTowards(this.scene.player.x, this.scene.player.y);
     }
 }
