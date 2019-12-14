@@ -57,17 +57,27 @@ export default class Game extends Phaser.Scene {
     
     this.matter.world.on('collisionactive', function(event){ 
         let pairs = event.pairs;
-        
         for (let i = 0; i < pairs.length; i++){
           //console.log(pairs[i]);
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
-            if (pairs[i].bodyA.gameObject.active)pairs[i].bodyB.gameObject.reduceHealth(5);
-            console.log(pairs[i].bodyB.gameObject.health);
+            if (pairs[i].bodyA.gameObject.active) pairs[i].bodyB.gameObject.reduceHealth(5);
           }
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
-            pairs[i].bodyA.gameObject.reduceHealth(5);
+            if (pairs[i].bodyB.gameObject.active){
+              pairs[i].bodyA.gameObject.reduceHealth(5);
+              console.log(pairs[i].bodyA.gameObject.health);
+            } 
           }
         }
+    });
+    this.matter.world.on('collisionstart', function(event){
+      let pairs = event.pairs;
+      //console.log(pairs);
+      for (let i = 0; i < pairs.length; i++){
+        if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyRange') {
+          pairs[i].bodyB.gameObject.character.isReady = true;
+        }   
+      }
     });
 
     this.map = this.make.tilemap({
