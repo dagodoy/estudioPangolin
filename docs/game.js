@@ -8,8 +8,14 @@ export default class Game extends Phaser.Scene {
   }
   
   preload() {  
-    this.c1 = this.matter.world.nextCategory();
-    this.c2 = this.matter.world.nextCategory();
+    this.cplayer = this.matter.world.nextCategory();
+    this.cphitbox = this.matter.world.nextCategory();
+
+    this.cenemy = this.matter.world.nextCategory();   
+    this.cehitbox = this.matter.world.nextCategory();
+
+    this.cwall = this.matter.world.nextCategory();
+    
     this.load.image('character', 'favicon.png');
     this.load.image('wall', 'player.png');
     this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
@@ -28,23 +34,40 @@ export default class Game extends Phaser.Scene {
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
 
-    this.player.setCollisionCategory(this.c1);
-    this.player.hitbox.setCollisionCategory(this.c2);
-    this.wall.setCollisionCategory(this.c2);
-    
-    this.enemy.setCollidesWith([this.c2]);
-    this.player.setCollidesWith([this.c2]);
-    this.matter.world.on('collisionstart', function(event){ 
-        let pairs = event.pairs;
-        console.log(pairs[0]);
-        console.log(event);
-        console.log(pairs[0].bodyA.label);
-        console.log(pairs[0].bodyB.label);
-        if (pairs[0].bodyA.label === 'playerHitbox' && pairs[0].bodyB.label === 'enemy') {
-          pairs[0].bodyB.gameObject.reduceHealth(5);
-          console.log(pairs[0].bodyB.gameObject.health);
-        }
+    //Asignar categorías de colisión
+    this.player.setCollisionCategory(this.cplayer);
+    this.player.hitbox.setCollisionCategory(this.cphitbox);
 
+    this.enemy.setCollisionCategory(this.cenemy);
+    this.enemy.hitbox.setCollisionCategory(this.cehitbox);
+    this.enemy.range.setCollisionCategory(this.cehitbox);
+
+    this.wall.setCollisionCategory(this.cwall);
+    
+    //Asignar qué colisiona con qué
+    this.player.setCollidesWith([this.cwall, this.cehitbox]);
+    this.player.hitbox.setCollidesWith([this.cenemy]);
+
+    this.enemy.setCollidesWith([this.cphitbox, this.cwall]);
+    this.enemy.hitbox.setCollidesWith([this.cplayer]);
+    this.enemy.range.setCollidesWith([this.cplayer]);
+
+    this.wall.setCollidesWith([this.cplayer, this.cenemy])
+    
+    
+    this.matter.world.on('collisionactive', function(event){ 
+        let pairs = event.pairs;
+        
+        for (let i = 0; i < pairs.length; i++){
+          //console.log(pairs[i]);
+          if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
+            if (pairs[i].bodyA.gameObject.active)pairs[i].bodyB.gameObject.reduceHealth(5);
+            console.log(pairs[i].bodyB.gameObject.health);
+          }
+          else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
+            pairs[i].bodyA.gameObject.reduceHealth(5);
+          }
+        }
     });
 
     this.map = this.make.tilemap({

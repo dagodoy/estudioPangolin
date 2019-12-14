@@ -1,4 +1,5 @@
 import Character from "./character.js";
+import Hitbox from "./hitbox.js";
 
 export default class Enemy extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
@@ -16,9 +17,8 @@ export default class Enemy extends Character{
         repeat: -1});
         this.body.label = 'enemy';
         this.hitbox.body.label = 'enemyHitbox';
-        //this.range = this.scene.matter.add.circle(200, 50,50,  null);
-        //this.range.active = false;
-        //this.range.isSensor = true;
+        let area = this.scene.matter.add.circle(0, 0, 60,  null);
+        this.range = new Hitbox(this.scene, this.x, this.y, 0, null, this, area, false);
     }
 
 
@@ -39,7 +39,8 @@ export default class Enemy extends Character{
 
     preUpdate(t, d) {
         super.preUpdate(t,d);
-        //this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
+        this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
+        this.range.moveHitboxStatic();
         this.moveTowards(this.scene.player.x, this.scene.player.y);
     }
 }
