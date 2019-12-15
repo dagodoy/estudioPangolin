@@ -26,6 +26,10 @@ export default class Enemy extends Character{
 
         this.attackDelay = 500;
         this.attackCD = 0; 
+
+        this.canMove = false;
+        this.moveDelay = 250;
+        this.moveCD = 0;
     }
 
 
@@ -42,6 +46,15 @@ export default class Enemy extends Character{
             this.setVelocityY(this.speed * Math.sin(alpha));
         }
     }
+    push(dir){
+        if (this.canMove){
+            this.setVelocityX(0);
+            this.setVelocityY(0);
+            this.applyForce(dir);
+            console.log("empujado")
+            this.canMove = false;
+        }
+    }
 
 
     preUpdate(t, d) {
@@ -50,12 +63,20 @@ export default class Enemy extends Character{
         this.diry = this.scene.input.y - this.body.position.y
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.range.moveHitboxStatic();
-        if (!this.isReady) this.moveTowards(this.scene.player.x, this.scene.player.y);
+        if (!this.isReady && this.canMove) this.moveTowards(this.scene.player.x, this.scene.player.y);
         
         if (this.hitbox.active){
             this.hitbox.active = false;
             this.isReady = false;
         } 
+        if (!this.canMove){
+            if (t - this.moveCD > this.moveDelay){
+                this.canMove = true;
+                this.moveCD = t;
+            }
+        }
+        else this.moveCD = t;
+
 
         if (this.isReady){
             //Aquí hay que meter que se quede parado al principio de la animación

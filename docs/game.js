@@ -30,7 +30,7 @@ export default class Game extends Phaser.Scene {
     
 
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
-    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
+    this.enemy = new Enemy(this, 1000, 500, 100, 2, 1, 10, 'enemy');
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
 
@@ -60,7 +60,10 @@ export default class Game extends Phaser.Scene {
         for (let i = 0; i < pairs.length; i++){
           //console.log(pairs[i]);
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
-            if (pairs[i].bodyA.gameObject.active) pairs[i].bodyB.gameObject.reduceHealth(5);
+            if (pairs[i].bodyA.gameObject.active){
+              pairs[i].bodyB.gameObject.reduceHealth(5);
+              pairs[i].bodyB.gameObject.push(new Phaser.Math.Vector2(10, 10));
+            } 
           }
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
             if (pairs[i].bodyB.gameObject.active){
