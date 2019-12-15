@@ -15,15 +15,24 @@ export default class Enemy extends Character{
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 117, end:124}),
         frameRate: 6,
         repeat: -1});
+        //ataques
+    this.scene.anims.create({
+         key: 'enemy_right_atk', 
+        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 26, end:34}),
+        frameRate: 6});
+    this.scene.anims.create({
+          key: 'enemy_left_atk', 
+          frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 130, end:138}),
+          frameRate: 6});
 
         this.body.label = 'enemy';
         this.hitbox.body.label = 'enemyHitbox';
-
+        this.facing = 1;
         let area = this.scene.matter.add.circle(0, 0, 60,  null);
         this.range = new Hitbox(this.scene, this.x, this.y, 0, null, this, area, false);
         this.range.body.label = 'enemyRange';
         this.isReady = false;
-
+        this.isAttacking = false;
         this.attackDelay = 500;
         this.attackCD = 0; 
 
@@ -37,11 +46,13 @@ export default class Enemy extends Character{
         var alpha = Math.atan((y-this.y)/(x-this.x));
         if (this.x > x){
             super.playAnimation('enemy_left_mov');
+            this.facing = -1;
             this.setVelocityX(-this.speed * Math.cos(alpha));
             this.setVelocityY(-this.speed * Math.sin(alpha));
         }
         else{
             super.playAnimation('enemy_right_mov');
+            this.facing = 1;
             this.setVelocityX(this.speed * Math.cos(alpha));
             this.setVelocityY(this.speed * Math.sin(alpha));
         }
@@ -79,9 +90,11 @@ export default class Enemy extends Character{
 
 
         if (this.isReady){
+            if (this.facing == 1) super.playAnimation('enemy_right_atk');
+            else super.playAnimation('enemy_left_atk');
+            
             //Aquí hay que meter que se quede parado al principio de la animación
             if(t - this.attackCD > this.attackDelay){
-                //Aquí ya reproduce la animación de ataque y el efecto de la hitbox
                 this.hitbox.active = true;
                 this.attackCD = t;
             }  
