@@ -22,6 +22,17 @@ export default class Player extends Character{
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 96, end:101}),
         frameRate: 6,
         repeat: -1});
+      //ataques
+      this.scene.anims.create({
+        key: 'vamp_right_atk', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 25, end:31}),
+        frameRate: 6,
+        repeat: 1});
+      this.scene.anims.create({
+        key: 'vamp_left_atk', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 109, end:115}),
+        frameRate: 6,
+        repeat: 1});
 
         this.inBattle = true;
         this.lifeFlag = true;
@@ -99,6 +110,9 @@ export default class Player extends Character{
         this.applyForce(this.forceDir);
         this.canMove = false;
         console.log("ataque" + this.comboCount);
+        //debería depender de la posición de la hitbox, no del personaje
+        if (this.facing == 1) super.playAnimation('vamp_right_atk');
+        else super.playAnimation('vamp_left_atk');
       }
       else{
         this.hitbox.active = false;
