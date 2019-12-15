@@ -121,14 +121,13 @@ export default class Player extends Character{
         this.setVelocityY(0);
         this.applyForce(this.forceDir);
         this.canMove = false;
-        console.log("ataque" + this.comboCount);
         //debería depender de la posición de la hitbox, no del personaje
         if (this.facing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
         this.hitbox.playAnimation();
       }
       else{
-        this.hitbox.active = false;
+        //this.hitbox.active = false;
       }
     }
     
@@ -199,6 +198,7 @@ export default class Player extends Character{
           this.canMove = true;
           this.moveCD = t;
         }
+        this.hitbox.active = false;
       }
 
       this.makeSpeedy();

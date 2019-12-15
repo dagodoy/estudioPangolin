@@ -1,4 +1,5 @@
 import Hitbox from "./hitbox.js"
+
 export default class Character extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet) {
     super(scene.matter.world, x, y, spriteSheet);

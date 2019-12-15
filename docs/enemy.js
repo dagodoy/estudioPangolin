@@ -37,8 +37,12 @@ export default class Enemy extends Character{
         this.attackCD = 0; 
 
         this.canMove = false;
-        this.moveDelay = 250;
+        this.moveDelay = 230;
         this.moveCD = 0;
+
+        this.forceDir = new Phaser.Math.Vector2(1, 1);
+        this.hasBeenPushed = false;
+
     }
 
 
@@ -59,10 +63,9 @@ export default class Enemy extends Character{
     }
     push(dir){
         if (this.canMove){
-            this.setVelocityX(0);
-            this.setVelocityY(0);
-            this.applyForce(dir);
-            console.log("empujado")
+            this.hasBeenPushed = false;
+            this.setVelocity(0, 0);
+            this.forceDir = dir
             this.canMove = false;
         }
     }
@@ -71,11 +74,20 @@ export default class Enemy extends Character{
     preUpdate(t, d) {
         super.preUpdate(t,d);
         this.dirx = this.scene.input.x - this.body.position.x;
-        this.diry = this.scene.input.y - this.body.position.y
+        this.diry = this.scene.input.y - this.body.position.y;
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.range.moveHitboxStatic();
-        if (!this.isReady && this.canMove) this.moveTowards(this.scene.player.x, this.scene.player.y);
-        
+        if (this.canMove){
+            if (!this.isReady)this.moveTowards(this.scene.player.x, this.scene.player.y);
+            else this.setVelocity(0, 0);
+        }
+        else{
+            if (!this.hasBeenPushed){
+                this.applyForce (this.forceDir);
+                this.hasBeenPushed = true;
+            }
+        } 
+        //console.log(this.canMove)
         if (this.hitbox.active){
             this.hitbox.active = false;
             this.isReady = false;
@@ -99,7 +111,6 @@ export default class Enemy extends Character{
                 this.attackCD = t;
             }  
         } 
-        else this.attackCD = t;
-        
+        else this.attackCD = t;        
     }
 }

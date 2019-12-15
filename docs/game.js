@@ -63,13 +63,13 @@ export default class Game extends Phaser.Scene {
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
             if (pairs[i].bodyA.gameObject.active){
               pairs[i].bodyB.gameObject.reduceHealth(5);
-              pairs[i].bodyB.gameObject.push(new Phaser.Math.Vector2(10, 10));
+              pairs[i].bodyB.gameObject.push(pairs[i].bodyA.gameObject.character.forceDir);
             } 
           }
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
             if (pairs[i].bodyB.gameObject.active){
               pairs[i].bodyA.gameObject.reduceHealth(5);
-              console.log(pairs[i].bodyA.gameObject.health);
+              //console.log(pairs[i].bodyA.gameObject.health);
             } 
           }
         }
