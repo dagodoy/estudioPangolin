@@ -20,7 +20,7 @@ export default class Hitbox extends Phaser.Physics.Matter.Sprite {
         if (this.isAttack) this.rotation = Math.atan(diry/dirx);
     }
     moveHitboxStatic(){
-        this.x = this.character.body.position.x;
-        this.y = this.character.body.position.y;
+        this.x = this.character.body.position.x + this.offset;
+        this.y = this.character.body.position.y + this.offset;
     }
 }

@@ -44,6 +44,12 @@ export default class Player extends Character{
         this.comboCD = 0;
         this.comboResetter = 500;
         this.comboDuration = 3;
+
+        this.thrustDelay = 250;
+        this.thrustCD = 0;
+        
+        this.moveCD = 0;
+        this.canMove = true;
         
 
         this.startingDmg = atkDmg;
@@ -51,6 +57,8 @@ export default class Player extends Character{
 
         this.body.label = 'player';
         this.hitbox.body.label = 'playerHitbox';
+
+        this.forceDir = new Phaser.Math.Vector2(0, 0);
     }
     playerController(){
       if (this.a.isDown) {
@@ -86,6 +94,10 @@ export default class Player extends Character{
       if (this.scene.input.activePointer.primaryDown && this.attackControl){     
         this.hitbox.active = true;
         this.attackControl = false;
+        this.setVelocityX(0);
+        this.setVelocityY(0);
+        this.applyForce(this.forceDir);
+        this.canMove = false;
         console.log("ataque" + this.comboCount);
       }
       else{
@@ -120,7 +132,7 @@ export default class Player extends Character{
           } 
           this.comboCount++;
           this.attackControl = true;
-  
+          
           if (this.comboCount > this.comboDuration - 1){
             this.attackDelay = this.comboDelay;
           } 
@@ -145,11 +157,31 @@ export default class Player extends Character{
 
     preUpdate(t, d) {
       super.preUpdate(t, d);
-      this.playerController(t); 
+      if (this.canMove){
+        this.playerController(t);
+        this.thrustCD = t;
+        this.moveCD = t;
+      } 
+      else{
+        if (t - this.thrustCD > this.thrustDelay){
+          this.setVelocityX(0);
+          this.setVelocityY(0);
+          this.thrustCD = t;
+        }
+        if (t - this.moveCD > this.attackDelayBase){
+          this.canMove = true;
+          this.moveCD = t;
+        }
+      }
+
       this.makeSpeedy();
       this.loseLife(t);
       this.attackSystem(t);
-      this.hitbox.moveHitbox(this.scene.input.x - this.body.position.x,
-          this.scene.input.y - this.body.position.y);  
+      this.dirx = this.scene.input.x - this.body.position.x;
+      this.diry = this.scene.input.y - this.body.position.y
+      this.mod = (Math.sqrt(this.dirx*this.dirx + this.diry*this.diry)) * 10
+      this.forceDir.x = this.dirx/this.mod;
+      this.forceDir.y = this.diry/this.mod;
+      this.hitbox.moveHitbox(this.dirx, this.diry);  
     }
 }

@@ -46,7 +46,8 @@ export default class Enemy extends Character{
 
     preUpdate(t, d) {
         super.preUpdate(t,d);
-        
+        this.dirx = this.scene.input.x - this.body.position.x;
+        this.diry = this.scene.input.y - this.body.position.y
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.range.moveHitboxStatic();
         if (!this.isReady) this.moveTowards(this.scene.player.x, this.scene.player.y);
