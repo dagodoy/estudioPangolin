@@ -6,11 +6,16 @@ export default class Player extends Character{
         
       //idle
       this.scene.anims.create({
-        key: 'vamp_idle', 
+        key: 'vamp_right_idle', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 0, end:9}),
         frameRate: 6,
         repeat: -1});
-
+      this.scene.anims.create({
+        key: 'vamp_left_idle', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 84, end:93}),
+        frameRate: 6,
+        repeat: -1});
+  
       //movimiento
       this.scene.anims.create({
         key: 'vamp_right_mov', 
@@ -84,22 +89,29 @@ export default class Player extends Character{
           super.playAnimation('vamp_right_mov');
         }
         else {
-          this.setVelocityX(0);  
-          super.playAnimation('vamp_idle');
+          this.setVelocityX(0);            
         }
       }
   
       if (this.w.isDown) {
           this.setVelocityY(-this.speed);
+          if (this.facing == 1) super.playAnimation('vamp_right_mov');
+          else super.playAnimation('vamp_left_mov');
       }
       else {
         if (this.s.isDown) {
           this.setVelocityY(this.speed);
+          if (this.facing == 1) super.playAnimation('vamp_right_mov');
+          else super.playAnimation('vamp_left_mov');
         }
         else {
           this.setVelocityY(0);
         }
       }
+      if(this.body.velocity.x == 0 && this.body.velocity.y == 0) {
+        if (this.facing == 1) super.playAnimation('vamp_right_idle');
+          else super.playAnimation('vamp_left_idle');
+        }
 
 
       if (this.scene.input.activePointer.primaryDown && this.attackControl){     
