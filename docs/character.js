@@ -22,7 +22,7 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
     this.scene.matter.world.add(this);
     this.setFixedRotation();
     let forma = this.scene.matter.add.rectangle(x, y, 30, 80);
-    this.hitbox = new Hitbox(scene, x, y, 50, null, this, forma, true);
+    this.hitbox = new Hitbox(scene, x, y, 50, 'plane', this, forma, true);
   }
   reduceHealth(damage){
     this.health -= damage;

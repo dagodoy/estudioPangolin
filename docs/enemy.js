@@ -29,7 +29,7 @@ export default class Enemy extends Character{
         this.hitbox.body.label = 'enemyHitbox';
         this.facing = 1;
         let area = this.scene.matter.add.circle(0, 0, 60,  null);
-        this.range = new Hitbox(this.scene, this.x, this.y, 0, null, this, area, false);
+        this.range = new Hitbox(this.scene, this.x, this.y, 0, 'plane', this, area, false);
         this.range.body.label = 'enemyRange';
         this.isReady = false;
         this.isAttacking = false;

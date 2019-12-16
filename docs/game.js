@@ -16,24 +16,22 @@ export default class Game extends Phaser.Scene {
 
     this.cwall = this.matter.world.nextCategory();
     
-    this.load.image('character', 'favicon.png');
-    this.load.image('wall', 'player.png');
+    this.load.image('plane', 'planetransparent.png')
     this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
     this.load.atlas('enemy', 'enemyatlas.png', 'enemyatlas_atlas.json');
     this.load.atlas('attack', 'cut_atlas.png', 'cut_atlas_atlas.json');
-    this.load.image('ForestTile200', 'ForestTile200.png');
-    this.load.tilemapTiledJSON('map', 'map.json');
+    this.load.tilemapTiledJSON('prueba_map', 'prueba.json');
+    this.load.image('Forest', 'ForestTile200.png');
 
 
   }
 
   create() {
-    
-
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
     this.enemy = new Enemy(this, 1000, 500, 100, 1, 1, 10, 'enemy');
-    this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
+    // this.cameras.main.startFollow(this.player);
+
 
     //Asignar categorías de colisión
     this.player.setCollisionCategory(this.cplayer);
@@ -85,11 +83,11 @@ export default class Game extends Phaser.Scene {
     });
 
     this.map = this.make.tilemap({
-      key: 'map',
+      key: 'prueba_map',
       tileWidth: 64,
       tileHeight: 64
     });
-    this.tileset = this.map.addTilesetImage('ForestTile200');
+    this.map.addTilesetImage('ForestTile200');
   }
 
   update(time, delta) {    
