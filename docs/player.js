@@ -8,35 +8,54 @@ export default class Player extends Character{
       this.scene.anims.create({
         key: 'vamp_right_idle', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 0, end:9}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: -1});
       this.scene.anims.create({
         key: 'vamp_left_idle', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 84, end:93}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: -1});
   
       //movimiento
       this.scene.anims.create({
         key: 'vamp_right_mov', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 12, end: 17}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: -1});
       this.scene.anims.create({
         key: 'vamp_left_mov', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 96, end:101}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: -1});
       //ataques
       this.scene.anims.create({
         key: 'vamp_right_atk', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 25, end:31}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: 1});
       this.scene.anims.create({
         key: 'vamp_left_atk', 
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 109, end:115}),
-        frameRate: 6,
+        frameRate: 12,
+        repeat: 1});
+        this.scene.anims.create({
+          key: 'vamp_right_bite', 
+          frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 36, end:46}),
+          frameRate: 12});
+      this.scene.anims.create({
+          key: 'vamp_left_bite', 
+          frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 120, end:127}),
+          frameRate: 12});
+      //daño recibido
+      this.scene.anims.create({
+        key: 'vamp_right_dmg', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 48, end:50}),
+        frameRate: 12,
+        repeat: 1});
+       this.scene.anims.create({
+        key: 'vamp_left_dmg', 
+        frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 132, end:134}),
+        frameRate: 12,
         repeat: 1});
 
         this.inBattle = true;

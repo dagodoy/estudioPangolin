@@ -8,22 +8,34 @@ export default class Enemy extends Character{
       this.scene.anims.create({
         key: 'enemy_right_mov', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 13, end:20}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: -1});
       this.scene.anims.create({
         key: 'enemy_left_mov', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 117, end:124}),
-        frameRate: 6,
+        frameRate: 12,
         repeat: -1});
         //ataques
     this.scene.anims.create({
          key: 'enemy_right_atk', 
-        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 26, end:34}),
-        frameRate: 6});
+        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 52, end:61}),
+        frameRate: 12});
     this.scene.anims.create({
           key: 'enemy_left_atk', 
-          frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 130, end:138}),
-          frameRate: 6});
+          frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 156, end:165}),
+          frameRate: 12});
+    
+        //daño recibido
+    this.scene.anims.create({
+        key: 'enemy_right_dmg', 
+        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 78, end:81}),
+        frameRate: 6,
+        repeat: 1});
+       this.scene.anims.create({
+        key: 'enemy_left_dmg', 
+        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 182, end:185}),
+        frameRate: 6,
+        repeat: 1});
 
         this.body.label = 'enemy';
         this.hitbox.body.label = 'enemyHitbox';
@@ -63,6 +75,10 @@ export default class Enemy extends Character{
     }
     push(dir){
         if (this.canMove){
+            if(this.facing==1)super.playAnimation('enemy_right_dmg');
+            else super.playAnimation('enemy_left_dmg');
+        super.reduceHealth(5);
+        console.log(this.health);
             this.hasBeenPushed = false;
             this.setVelocity(0, 0);
             this.forceDir = dir
