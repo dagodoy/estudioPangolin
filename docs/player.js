@@ -124,7 +124,6 @@ export default class Player extends Character{
         //debería depender de la posición de la hitbox, no del personaje
         if (this.facing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
-        this.hitbox.playAnimation();
       }
       else{
         //this.hitbox.active = false;
