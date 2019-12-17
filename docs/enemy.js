@@ -53,13 +53,20 @@ export default class Enemy extends Character{
         this.attackDelay = 500;
         this.attackCD = 0; 
 
+        this.execute = 50;
         this.canMove = false;
         this.moveDelay = 230;
         this.moveCD = 0;
 
+        this.stop = false;
+        this.isInRange = false;
+
         this.forceDir = new Phaser.Math.Vector2(1, 1);
         this.hasBeenPushed = false;
 
+        this.setInteractive();
+
+        this.on("pointerdown", this.hasBeenBitten, this);
     }
 
 
@@ -87,7 +94,16 @@ export default class Enemy extends Character{
             this.canMove = false;
         }
     }
-
+    hasBeenBitten(){
+        if (this.scene.input.activePointer.rightButtonDown() && this.isInRange && this.health < this.execute){
+            this.stop = true;
+            this.reduceHealth(1000);
+            this.scene.player.x = this.x;
+            this.scene.player.y = this.y;
+            this.scene.player.isBiting = true;
+            this.scene.player.heal(20);
+        }
+    }
 
     preUpdate(t, d) {
         super.preUpdate(t,d);
@@ -95,30 +111,31 @@ export default class Enemy extends Character{
         this.diry = this.scene.input.y - this.body.position.y;
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.range.moveHitboxStatic();
-        if (this.canMove){
-            if (!this.isReady)this.moveTowards(this.scene.player.x, this.scene.player.y);
-            else this.setVelocity(0, 0);
+        if (this.stop){
+            this.moveCD = t;
         }
         else{
-            if (!this.hasBeenPushed){
-                this.applyForce (this.forceDir);
-                this.hasBeenPushed = true;
+            if (this.canMove){
+                if (!this.isReady)this.moveTowards(this.scene.player.x, this.scene.player.y);
+                else this.setVelocity(0, 0);
+                this.moveCD = t;
             }
-        } 
+            else{
+                if (!this.hasBeenPushed){
+                    this.applyForce (this.forceDir);
+                    this.hasBeenPushed = true;
+                }
+                if (t - this.moveCD > this.moveDelay){
+                    this.canMove = true;
+                    this.moveCD = t;
+                }
+            } 
+        }
         //console.log(this.canMove)
         if (this.hitbox.active){
             this.hitbox.active = false;
             this.isReady = false;
-        } 
-        if (!this.canMove){
-            if (t - this.moveCD > this.moveDelay){
-                this.canMove = true;
-                this.moveCD = t;
-            }
-        }
-        else this.moveCD = t;
-
-
+        }  
         if (this.isReady){
             if (this.facing == 1) super.playAnimation('enemy_right_atk');
             else super.playAnimation('enemy_left_atk');
