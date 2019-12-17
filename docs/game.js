@@ -21,13 +21,19 @@ export default class Game extends Phaser.Scene {
     this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
     this.load.atlas('enemy', 'enemyatlas.png', 'enemyatlas_atlas.json');
     this.load.atlas('attack', 'cut_atlas.png', 'cut_atlas_atlas.json');
-    this.load.tilemapTiledJSON('prueba_map', 'prueba.json');
-    this.load.image('Forest', 'ForestTile200.png');
-
+    this.load.tilemapTiledJSON('map', 'map.json');
+    this.load.image('tileset', 'tileset_64.png');
 
   }
 
   create() {
+    this.map = this.make.tilemap({
+      key: 'map',
+      tileWidth: 64,
+      tileHeight: 64
+    })
+    this.map.addTilesetImage('tileset_64', 'tileset');
+
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
     this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
     
@@ -98,12 +104,6 @@ export default class Game extends Phaser.Scene {
       }
     });
 
-    this.map = this.make.tilemap({
-      key: 'prueba_map',
-      tileWidth: 64,
-      tileHeight: 64
-    });
-    this.map.addTilesetImage('ForestTile200');
   }
 
   update(time, delta) {    

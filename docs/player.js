@@ -215,6 +215,8 @@ export default class Player extends Character{
     preUpdate(t, d) {
       super.preUpdate(t, d);
       if (this.isBiting){
+        if (this.facing == 1) super.playAnimation('vamp_right_bite');
+        else super.playAnimation('vamp_left_bite');
         this.thrustCD = t;
         this.moveCD = t;
         if (t- this.biteCD > this.biteDuration){

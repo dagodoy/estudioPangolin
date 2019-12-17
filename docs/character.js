@@ -30,7 +30,7 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
   }
   heal(healing){
     this.health += healing;
-    if (this.health > maxHealth) this.health = maxHealth;
+    if (this.health > this.maxHealth) this.health = this.maxHealth;
   }
 
   playAnimation(anim){
