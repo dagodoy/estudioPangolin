@@ -40,7 +40,7 @@ export default class Game extends Phaser.Scene {
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
-    // this.cameras.main.startFollow(this.player);
+    this.cameras.main.startFollow(this.player);
 
 
     //Asignar categorías de colisión
@@ -71,24 +71,24 @@ export default class Game extends Phaser.Scene {
           //console.log(pairs[i]);
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
             if (pairs[i].bodyA.gameObject.active){
-              pairs[i].bodyB.gameObject.reduceHealth(5);
+              pairs[i].bodyB.gameObject.reduceHealth(pairs[i].bodyA.gameObject.character.atkDmg);
               pairs[i].bodyB.gameObject.push(pairs[i].bodyA.gameObject.character.forceDir);
             } 
           }
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
             if (pairs[i].bodyB.gameObject.active){
-              pairs[i].bodyA.gameObject.reduceHealth(5);
-              //console.log(pairs[i].bodyA.gameObject.health);
+              pairs[i].bodyA.gameObject.reduceHealth(pairs[i].bodyB.gameObject.character.atkDmg);
             } 
           }
         }
     });
+
     this.matter.world.on('collisionstart', function(event){
       let pairs = event.pairs;
       //console.log(pairs);
       for (let i = 0; i < pairs.length; i++){
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyRange') {
-          pairs[i].bodyB.gameObject.character.isReady = true;
+          pairs[i].bodyB.gameObject.character.isClose = true;
         }   
         if (pairs[i].bodyA.label === 'playerRange' && pairs[i].bodyB.label === 'enemy') {
           pairs[i].bodyB.gameObject.isInRange = true;
@@ -101,6 +101,9 @@ export default class Game extends Phaser.Scene {
         if (pairs[i].bodyA.label === 'playerRange' && pairs[i].bodyB.label === 'enemy') {
           pairs[i].bodyB.gameObject.isInRange = false;
         } 
+        if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyRange') {
+          pairs[i].bodyB.gameObject.character.isClose = false;
+        }   
       }
     });
 

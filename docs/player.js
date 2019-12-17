@@ -153,16 +153,10 @@ export default class Player extends Character{
         this.forceDir.y = this.diry/this.mod;
         this.applyForce(this.forceDir);
         this.canMove = false;
-        //debería depender de la posición de la hitbox, no del personaje
         if (this.facing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
       }
-
-      if (this.scene.input.activePointer.secondaryDown){
-
-      }
     }
-    
     
     changeSpeed(spd){
         //la cantidad en la que aumente la velocidad la testearemos
@@ -216,6 +210,7 @@ export default class Player extends Character{
     preUpdate(t, d) {
       this.range.moveHitboxStatic();
       super.preUpdate(t, d);
+
       if (this.isBiting){
         if (this.facing == 1) super.playAnimation('vamp_right_bite');
         else super.playAnimation('vamp_left_bite');
@@ -228,37 +223,38 @@ export default class Player extends Character{
       }
       else{
         this.biteCD = t;
-      if (this.canMove){
-        this.playerController(t);
-        this.thrustCD = t;
-        this.moveCD = t;
-      } 
-      else{
-        if (t - this.thrustCD > this.thrustDelay){
-          this.setVelocityX(0);
-          this.setVelocityY(0);
+        if (this.canMove){
+          this.playerController(t);
           this.thrustCD = t;
-        }
-        if (t - this.moveCD > this.attackDelayBase){
-          this.canMove = true;
           this.moveCD = t;
+        } 
+        else{
+          if (t - this.thrustCD > this.thrustDelay){
+            this.setVelocityX(0);
+            this.setVelocityY(0);
+            this.thrustCD = t;
+          }
+          if (t - this.moveCD > this.attackDelayBase){
+            this.canMove = true;
+            this.moveCD = t;
+          }
+          this.hitbox.active = false;
         }
-        this.hitbox.active = false;
       }
-    }
 
       this.makeSpeedy();
       this.loseLife(t);
       this.attackSystem(t);
-      this.dirx = this.scene.input.x - this.body.position.x;
-      this.diry = this.scene.input.y - this.body.position.y
+      this.dirx = this.scene.input.x - this.scene.scale.baseSize.widtha/2;
+      this.diry = this.scene.input.y - this.scene.scale.baseSize.height/2;
       this.mod = (Math.sqrt(this.dirx*this.dirx + this.diry*this.diry)) * 10
       this.forceDir.x = this.dirx/this.mod;
-      if (this.forceDir.x < 0) this.facing = -1;
-      else this.facing = 1;
       this.forceDir.y = this.diry/this.mod;
       this.hitbox.moveHitbox(this.dirx, this.diry);
       this.range.moveHitboxStatic();  
 
+
+      if (this.forceDir.x < 0) this.facing = -1;
+      else this.facing = 1;
     }
 }

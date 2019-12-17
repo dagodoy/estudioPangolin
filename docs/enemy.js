@@ -48,10 +48,14 @@ export default class Enemy extends Character{
         let area = this.scene.matter.add.circle(0, 0, 60,  null);
         this.range = new Hitbox(this.scene, this.x, this.y, 0, 'plane', this, area, false);
         this.range.body.label = 'enemyRange';
+        this.isClose = false;
         this.isReady = false;
         this.isAttacking = false;
-        this.attackDelay = 500;
+        this.attackDelay = 2000;
         this.attackCD = 0; 
+
+        this.damageCD = 0;
+        this.attackSpd = 500;
 
         this.execute = 50;
         this.canMove = false;
@@ -92,6 +96,10 @@ export default class Enemy extends Character{
             this.setVelocity(0, 0);
             this.forceDir = dir
             this.canMove = false;
+            this.hitbox.active = false;
+            this.isReady = false;
+            if (this.facing == 1) super.playAnimation('enemy_right_dmg')
+            else if (this.facing == -1) super.playAnimation('enemy_left_dmg')
         }
     }
     hasBeenBitten(){
@@ -111,14 +119,10 @@ export default class Enemy extends Character{
         this.diry = this.scene.input.y - this.body.position.y;
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
         this.range.moveHitboxStatic();
-        if (this.stop){
-            this.moveCD = t;
-        }
-        else{
+        if (!this.stop){
             if (this.canMove){
                 if (!this.isReady)this.moveTowards(this.scene.player.x, this.scene.player.y);
                 else this.setVelocity(0, 0);
-                this.moveCD = t;
             }
             else{
                 if (!this.hasBeenPushed){
@@ -127,24 +131,29 @@ export default class Enemy extends Character{
                 }
                 if (t - this.moveCD > this.moveDelay){
                     this.canMove = true;
-                    this.moveCD = t;
                 }
             } 
+            if (this.isReady){      
+                //Aquí hay que meter que se quede parado al principio de la animación
+                //La animación se reproduce antes del timer. Si el timer se aumenta queda raro y si se emte en el otro if solo dura 1 frame
+                //Se puede poner un pequeño delay sin complicar mucho las cosas
+                if (this.facing == 1) super.playAnimation('enemy_right_atk');
+                else super.playAnimation('enemy_left_atk');
+
+                if(t - this.attackCD > this.attackDelay){
+                    this.hitbox.active = true;
+                    this.attackCD = t;
+                }  
+            } 
         }
-        //console.log(this.canMove)
+        if (!this.isReady) this.attackCD = t;
+        else this.damageCD = t;
+        if (this.canMove) this.moveCD = t;
+
         if (this.hitbox.active){
             this.hitbox.active = false;
             this.isReady = false;
         }  
-        if (this.isReady){
-            if (this.facing == 1) super.playAnimation('enemy_right_atk');
-            else super.playAnimation('enemy_left_atk');
-            //Aquí hay que meter que se quede parado al principio de la animación
-            if(t - this.attackCD > this.attackDelay){
-                this.hitbox.active = true;
-                this.attackCD = t;
-            }  
-        } 
-        else this.attackCD = t;        
+        if (this.isClose) this.isReady = true;
     }
 }
