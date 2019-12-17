@@ -15,7 +15,6 @@ export default class Player extends Character{
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 84, end:93}),
         frameRate: 12,
         repeat: -1});
-  
       //movimiento
       this.scene.anims.create({
         key: 'vamp_right_mov', 
@@ -40,7 +39,7 @@ export default class Player extends Character{
         repeat: 1});
         this.scene.anims.create({
           key: 'vamp_right_bite', 
-          frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 36, end:46}),
+          frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 36, end:43}),
           frameRate: 12});
       this.scene.anims.create({
           key: 'vamp_left_bite', 
@@ -57,7 +56,11 @@ export default class Player extends Character{
         frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 132, end:134}),
         frameRate: 12,
         repeat: 1});
-
+        this.scene.anims.create({
+          key: 'vamp_die', 
+          frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
+          frameRate: 12,
+});
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;

@@ -5,16 +5,21 @@ export default class Enemy extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
         super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet);
       //movimiento
-      this.scene.anims.create({
+    this.scene.anims.create({
         key: 'enemy_right_mov', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 13, end:20}),
         frameRate: 12,
         repeat: -1});
-      this.scene.anims.create({
+    this.scene.anims.create({
         key: 'enemy_left_mov', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 117, end:124}),
         frameRate: 12,
         repeat: -1});
+    this.scene.anims.create({
+        key: 'enemy_idle', 
+        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 0, end:12}),
+        frameRate: 6,
+        repeat: 1});
         //ataques
     this.scene.anims.create({
          key: 'enemy_right_atk', 
@@ -24,18 +29,18 @@ export default class Enemy extends Character{
           key: 'enemy_left_atk', 
           frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 156, end:165}),
           frameRate: 12});
-    
         //daño recibido
     this.scene.anims.create({
         key: 'enemy_right_dmg', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 78, end:81}),
         frameRate: 6,
         repeat: 1});
-       this.scene.anims.create({
+    this.scene.anims.create({
         key: 'enemy_left_dmg', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 182, end:185}),
         frameRate: 6,
         repeat: 1});
+    
 
         this.body.label = 'enemy';
         this.hitbox.body.label = 'enemyHitbox';
@@ -72,13 +77,10 @@ export default class Enemy extends Character{
             this.setVelocityX(this.speed * Math.cos(alpha));
             this.setVelocityY(this.speed * Math.sin(alpha));
         }
+       
     }
     push(dir){
         if (this.canMove){
-            if(this.facing==1)super.playAnimation('enemy_right_dmg');
-            else super.playAnimation('enemy_left_dmg');
-        super.reduceHealth(5);
-        console.log(this.health);
             this.hasBeenPushed = false;
             this.setVelocity(0, 0);
             this.forceDir = dir
@@ -120,7 +122,6 @@ export default class Enemy extends Character{
         if (this.isReady){
             if (this.facing == 1) super.playAnimation('enemy_right_atk');
             else super.playAnimation('enemy_left_atk');
-            
             //Aquí hay que meter que se quede parado al principio de la animación
             if(t - this.attackCD > this.attackDelay){
                 this.hitbox.active = true;
