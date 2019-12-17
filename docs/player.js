@@ -1,5 +1,6 @@
 import Character from "./character.js";
 import Hitbox from "./hitbox.js";
+import Lifebar from "./lifebar.js";
 export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
         super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet)
@@ -64,6 +65,7 @@ export default class Player extends Character{
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
+        this.lifebar = new Lifebar(scene, 200, 50, this.maxHealth);
 
         this.facing = 1;
 
@@ -209,6 +211,7 @@ export default class Player extends Character{
     }
 
     reduceEnergy(){
+      this.lifebar.reduceBar(5)
       this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
     }
 
