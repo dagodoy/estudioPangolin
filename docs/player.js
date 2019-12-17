@@ -138,7 +138,7 @@ export default class Player extends Character{
           else super.playAnimation('vamp_left_idle');
       }
       else{
-        if (facing == 1) super.playAnimation('vamp_right_mov');
+        if (this.facing == 1) super.playAnimation('vamp_right_mov');
         else super.playAnimation('vamp_left_mov');
       }
 
