@@ -1,3 +1,4 @@
+document.addEventListener('contextmenu', event=>event.preventDefault());
 import Player from "./player.js";
 import Enemy from "./enemy.js";
 import Wall from "./wall.js";
@@ -39,6 +40,7 @@ export default class Game extends Phaser.Scene {
     //Asignar categorías de colisión
     this.player.setCollisionCategory(this.cplayer);
     this.player.hitbox.setCollisionCategory(this.cphitbox);
+    this.player.range.setCollisionCategory(this.cphitbox);
 
     this.enemy.setCollisionCategory(this.cenemy);
     this.enemy.hitbox.setCollisionCategory(this.cehitbox);
@@ -82,6 +84,17 @@ export default class Game extends Phaser.Scene {
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyRange') {
           pairs[i].bodyB.gameObject.character.isReady = true;
         }   
+        if (pairs[i].bodyA.label === 'playerRange' && pairs[i].bodyB.label === 'enemy') {
+          pairs[i].bodyB.gameObject.isInRange = true;
+        }   
+      }
+    });
+    this.matter.world.on('collisionend', function(event){
+      let pairs = event.pairs
+      for (let i = 0; i<pairs.length;i++){
+        if (pairs[i].bodyA.label === 'playerRange' && pairs[i].bodyB.label === 'enemy') {
+          pairs[i].bodyB.gameObject.isInRange = false;
+        } 
       }
     });
 

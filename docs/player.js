@@ -1,5 +1,5 @@
 import Character from "./character.js";
-
+import Hitbox from "./hitbox.js";
 export default class Player extends Character{
     constructor(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet){
         super(scene, x, y, life, speed, atkSpeed, atkDmg, spriteSheet)
@@ -83,6 +83,9 @@ export default class Player extends Character{
         this.comboResetter = 500;
         this.comboDuration = 3;
 
+        this.biteDuration = 1000;
+        this.biteCD = 0;
+
         this.thrustDelay = 250;
         this.thrustCD = 0;
         
@@ -96,9 +99,16 @@ export default class Player extends Character{
         this.body.label = 'player';
         this.hitbox.body.label = 'playerHitbox';
 
+        let area = this.scene.matter.add.circle(0, 0, 100,  null);
+        this.range = new Hitbox(this.scene, this.x, this.y, 0, 'plane', this, area, false);
+        this.range.body.label = 'playerRange';
+
+        this.isBiting = false;
+
         this.forceDir = new Phaser.Math.Vector2(0, 0);
     }
     playerController(){
+
       if (this.a.isDown) {
         this.setVelocityX(-this.speed);
         this.facing = -1;
@@ -136,7 +146,7 @@ export default class Player extends Character{
         }
 
 
-      if (this.scene.input.activePointer.primaryDown && this.attackControl){     
+      if (this.scene.input.activePointer.leftButtonDown() && this.attackControl){     
         this.hitbox.active = true;
         this.attackControl = false;
         this.setVelocityX(0);
@@ -204,6 +214,16 @@ export default class Player extends Character{
 
     preUpdate(t, d) {
       super.preUpdate(t, d);
+      if (this.isBiting){
+        this.thrustCD = t;
+        this.moveCD = t;
+        if (t- this.biteCD > this.biteDuration){
+          this.isBiting = false;
+          this.biteCD = t;
+        }
+      }
+      else{
+        this.biteCD = t;
       if (this.canMove){
         this.playerController(t);
         this.thrustCD = t;
@@ -221,6 +241,7 @@ export default class Player extends Character{
         }
         this.hitbox.active = false;
       }
+    }
 
       this.makeSpeedy();
       this.loseLife(t);
@@ -230,7 +251,8 @@ export default class Player extends Character{
       this.mod = (Math.sqrt(this.dirx*this.dirx + this.diry*this.diry)) * 10
       this.forceDir.x = this.dirx/this.mod;
       this.forceDir.y = this.diry/this.mod;
-      this.hitbox.moveHitbox(this.dirx, this.diry);  
+      this.hitbox.moveHitbox(this.dirx, this.diry);
+      this.range.moveHitboxStatic();  
 
     }
 }
