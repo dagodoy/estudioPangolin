@@ -21,16 +21,14 @@ export default class Menu extends Phaser.Scene {
 
 
   preload() {  
-    this.load.bitmapFont('font', 'fonts/font.ttf');
-    this.load.image('button', 'images/button.png');
+        this.load.image('button', 'images/button.png');
   }
 
   create() {
-    //this.add.bitmapText(0, 200, 'font', 'aaaaaaaaaaaaaaaaaaaaa')
     let a = this.add.text(250, 0, 'Van Piro: Esiten', {
       fontFamily: 'font'});
-    a.scaleX *= 8;
-    a.scaleY *= 8;
+    a.scaleX *= 2;
+    a.scaleY *= 2;
     this.button = new Button(this, 700, 450, 'button', 'main');
     let b = this.add.text(610, 410, 'Start', {
       fontFamily: 'font'});
