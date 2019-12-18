@@ -4,14 +4,14 @@ export default class Menu extends Phaser.Scene {
   }
   
   preload() {  
-    
+    this.game.load.bitmapFont('font', 'font.ttf');
   }
 
   create() {
   }
 
   update(time, delta) {
-
+    console.log('e');
   }
 
 }
