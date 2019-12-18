@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene {
     this.load.atlas('vampire', 'images/vampireatlas.png', 'json/vampireatlas_atlas.json');
     this.load.atlas('enemy', 'images/enemyatlas.png', 'json/enemyatlas_atlas.json');
     this.load.atlas('attack', 'images/cut_atlas.png', 'json/cut_atlas_atlas.json');
-    this.load.tilemapTiledJSON('map', 'json/map.json');
+    this.load.tilemapTiledJSON('final_64', 'json/final_64.json');
     this.load.image('tileset', 'images/tileset_64.png');
     this.load.image('bite', 'images/bite.png')
 
@@ -32,19 +32,21 @@ export default class Game extends Phaser.Scene {
 
   create() {
     this.map = this.make.tilemap({
-      key: 'map',
+      key: 'final_64',
       tileWidth: 64,
       tileHeight: 64
     })
     this.tileset = this.map.addTilesetImage('tileset_64', 'tileset');
     this.tileset.backgroundLayer = this.map.createStaticLayer('background', this.tileset);
+    this.tileset.wallLayer = this.map.createStaticLayer('wall', this.tileset);
+    this.tileset.background2 = this.map.createStaticLayer('background2', this.tileset);
     this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
-    this.tileset.foregroundLayer.setCollisionBetween(0,999);
+    this.tileset.wallLayer.setCollisionBetween(0,999);
 
 
     this.lifebar_back = this.add.image(220, 50, 'lifebar_back');
     this.lifebar_back.setScrollFactor(0,0);
-    this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
+    this.player = new Player(this, 2500, 1520, 100, 5, 1, 10, 'vampire');
     this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
     this.lifebar_front.setScrollFactor(0,0);
     this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
@@ -63,9 +65,7 @@ export default class Game extends Phaser.Scene {
     this.enemy.hitbox.setCollisionCategory(this.cehitbox);
     this.enemy.range.setCollisionCategory(this.cehitbox);
 
-    this.matter.world.convertTilemapLayer(this.tileset.foregroundLayer);
-    console.log(this.tileset.foregroundLayer);
-    //this.matter.add.collider(this.player, this.foregroundLayer);
+    this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
     //Asignar qué colisiona con qué
     this.player.setCollidesWith([this.cwall, this.cehitbox, (0,999)]);
@@ -80,7 +80,6 @@ export default class Game extends Phaser.Scene {
     this.matter.world.on('collisionactive', function(event){ 
         let pairs = event.pairs;
         for (let i = 0; i < pairs.length; i++){
-          console.log(pairs[i]);
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
             if (pairs[i].bodyA.gameObject.active){
               pairs[i].bodyB.gameObject.reduceHealth(pairs[i].bodyA.gameObject.character.atkDmg);          
