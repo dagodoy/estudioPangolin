@@ -9,12 +9,10 @@ export default class Room extends Phaser.Physics.Matter.Sprite {
         this.scene.matter.world.add(this);
         this.enemies = enemies;
         this.spawnPoints = [];
-        for (let i = 1; i <= this.enemies; i++){
-            this.spawnPoints[i - 1] = new Phaser.Math.Vector2()
-            this.spawnPoints[i - 1].x = (this.body.bounds.max.x + this.body.bounds.min.x)/2 + r * Math.cos(2*i*Math.PI/enemies);
-            this.spawnPoints[i - 1].y = (this.body.bounds.max.y + this.body.bounds.min.y)/2 + r * Math.sin(2*i*Math.PI/enemies);
-            //console.log(2*i*Math.PI/enemies)
-            console.log(r * Math.cos(2*i*Math.PI/enemies))
+        for (let i = 0; i < this.enemies; i++){
+            this.spawnPoints[i] = new Phaser.Math.Vector2()
+            this.spawnPoints[i].x = (this.body.bounds.max.x + this.body.bounds.min.x)/2 + r * Math.cos(2*i*Math.PI/enemies);
+            this.spawnPoints[i].y = (this.body.bounds.max.y + this.body.bounds.min.y)/2 + r * Math.sin(2*i*Math.PI/enemies);
         }
         console.log(this.spawnPoints)
         this.active = false;
