@@ -66,7 +66,7 @@ export default class Player extends Character{
         this.lifeFlag = true;
         this.speedy = false;
         this.lifebar = new Lifebar(scene, 220, 75, this.maxHealth);
-
+        this.blood = 5;
         this.facing = 1;
 
         this.lifeDelay = 1000;
@@ -205,8 +205,8 @@ export default class Player extends Character{
     }
 
     reduceEnergy(){
-      this.lifebar.reduceBar(5)
-      this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
+      this.lifebar.reduceBar(this.blood)
+      this.reduceHealth(this.blood);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
     }
 
     preUpdate(t, d) {
