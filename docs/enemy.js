@@ -110,6 +110,7 @@ export default class Enemy extends Character{
             this.scene.player.y = this.y;
             this.scene.player.isBiting = true;
             this.scene.player.heal(20);
+            this.scene.player.lifeBar.reduceBar(-20);
         }
     }
 

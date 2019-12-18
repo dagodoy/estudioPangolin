@@ -6,14 +6,14 @@ export default class Menu extends Phaser.Scene {
   }
   
   preload() {  
-
+    
   }
 
   create() {
   }
 
   update(time, delta) {
-      console.log("a")
+      
   }
 
 }
