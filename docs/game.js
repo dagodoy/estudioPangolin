@@ -35,7 +35,7 @@ export default class Game extends Phaser.Scene {
     this.map.addTilesetImage('tileset_64', 'tileset');
 
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
-    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
+    this.enemy = new Enemy(this, 1000, 500, 10, 0, 1, 10, 'enemy');
     
     
     this.wall = new Wall (this, 500, 500);
@@ -71,7 +71,7 @@ export default class Game extends Phaser.Scene {
           //console.log(pairs[i]);
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
             if (pairs[i].bodyA.gameObject.active){
-              pairs[i].bodyB.gameObject.reduceHealth(pairs[i].bodyA.gameObject.character.atkDmg);
+              pairs[i].bodyB.gameObject.reduceHealth(pairs[i].bodyA.gameObject.character.atkDmg);          
               pairs[i].bodyB.gameObject.push(pairs[i].bodyA.gameObject.character.forceDir);
             } 
           }
