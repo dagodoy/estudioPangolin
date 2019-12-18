@@ -17,16 +17,16 @@ export default class Game extends Phaser.Scene {
 
     this.cwall = this.matter.world.nextCategory();
     
-    this.load.image('plane', 'planetransparent.png');
-    this.load.image('lifebar_front', 'lifebar_front.png');
-    this.load.image('lifebar_back', 'lifebar_back.png');
-    this.load.image('lifebar', 'lifebar_content.png');
-    this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
-    this.load.atlas('enemy', 'enemyatlas.png', 'enemyatlas_atlas.json');
-    this.load.atlas('attack', 'cut_atlas.png', 'cut_atlas_atlas.json');
-    this.load.tilemapTiledJSON('map', 'map.json');
-    this.load.image('tileset', 'tileset_64.png');
-    this.load.image('bite', 'bite.png')
+    this.load.image('plane', 'images/planetransparent.png');
+    this.load.image('lifebar_front', 'images/lifebar_front.png');
+    this.load.image('lifebar_back', 'images/lifebar_back.png');
+    this.load.image('lifebar', 'images/lifebar_content.png');
+    this.load.atlas('vampire', 'images/vampireatlas.png', 'json/vampireatlas_atlas.json');
+    this.load.atlas('enemy', 'images/enemyatlas.png', 'json/enemyatlas_atlas.json');
+    this.load.atlas('attack', 'images/cut_atlas.png', 'json/cut_atlas_atlas.json');
+    this.load.tilemapTiledJSON('map', 'json/map.json');
+    this.load.image('tileset', 'images/tileset_64.png');
+    this.load.image('bite', 'images/bite.png')
 
   }
 

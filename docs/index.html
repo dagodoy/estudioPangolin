@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="assets/tether/tether.min.css">
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-  <script src="phaser.min.js"></script>
+  <script src="scripts/phaser.min.js"></script>
   
   
 </head>
@@ -51,7 +51,7 @@
 
 </section>
 
-<section class="engine"><a href="https://mobirise.info/q">responsive site templates</a></section><section class="mbr-section article content10 cid-rKUE8AumKR" id="content10-g">
+<section class="engine"><a href="https://mobirise.info/b">how to create your own site</a></section><section class="mbr-section article content10 cid-rKUE8AumKR" id="content10-g">
     
      
 
@@ -125,7 +125,7 @@
                             <h4 class="mbr-content-title mbr-bold mbr-fonts-style display-7">
                                 Bootstrap
                             </h4>
-                            <p class="mbr-content-text mbr-fonts-style display-7">Utiliza el click izquierdo para atacar con la espada, y el click derecho para realizar un devastador mordisco y recuperar vida.</p>
+                            <p class="mbr-content-text mbr-fonts-style display-7">Utiliza el click izquierdo para atacar con la espada, y el click derecho sobre un enemigo cercano (cuando tenga el indicador encima) para realizar un devastador mordisco y recuperar vida.</p>
                         </div>
                     </div>
                 </div>
@@ -142,30 +142,30 @@
     
 
     <figure class="mbr-figure container">
-            <div class="image-block" style="width: 100%;" id = 'gameid'>
-                <script type="module">
-                    import Game from './game.js';
-                    import GameOver from './game_over.js';
-                    import Menu from './menu.js';
-                    var config = {
-                        type: Phaser.AUTO,
-                        width: 1400,
-                        height: 800,
-                        parent: 'gameid',
-                        pixelArt: true,
-                        input: {
-                            gamepad: true
-                        },
-                        scale: {
-                            mode: Phaser.Scale.FIT,
-                            autoCenter: Phaser.Scale.CENTER_BOTH
-                        },
-                        scene: [ Game, GameOver, Menu ],
-                        physics: {default: 'matter', matter: { gravity: { x :0, y: 0}, debug: true } }
-                    };
-                    new Phaser.Game(config);
-                </script>
-            </div>
+        <div class="image-block" style="width: 100%;" id = 'gameid'>
+            <script type="module">
+                import Game from './scripts/game.js';
+                import GameOver from './scripts/game_over.js';
+                import Menu from './scripts/menu.js';
+                var config = {
+                    type: Phaser.AUTO,
+                    width: 1400,
+                    height: 800,
+                    parent: 'gameid',
+                    pixelArt: true,
+                    input: {
+                        gamepad: true
+                    },
+                    scale: {
+                        mode: Phaser.Scale.FIT,
+                        autoCenter: Phaser.Scale.CENTER_BOTH
+                    },
+                    scene: [ Game, GameOver, Menu ],
+                    physics: {default: 'matter', matter: { gravity: { x :0, y: 0}, debug: true } }
+                };
+                new Phaser.Game(config);
+            </script>
+        </div>
     </figure>
 </section>
 

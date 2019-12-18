@@ -6,8 +6,8 @@ export default class GameOver extends Phaser.Scene {
   }
   
   preload() {  
-    this.screen = this.load.image('screen', 'game_over.png');
-    this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
+    this.screen = this.load.image('screen', 'images/game_over.png');
+    this.load.atlas('vampire', 'images/vampireatlas.png', 'json/vampireatlas_atlas.json');
   }
 
   create() {
