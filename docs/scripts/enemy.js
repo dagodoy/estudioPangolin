@@ -68,7 +68,7 @@ export default class Enemy extends Character{
         this.forceDir = new Phaser.Math.Vector2(1, 1);
         this.hasBeenPushed = false;
 
-        this.biteImage = this.scene.add.image(0, 0, 'bite');
+        this.biteImage = this.scene.add.image(0, 0, 'images/bite');
         this.biteImage.visible = false;
         this.biteOffset = -50;
 
