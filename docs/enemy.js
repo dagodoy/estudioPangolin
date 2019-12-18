@@ -156,14 +156,8 @@ export default class Enemy extends Character{
 
         if (this.isClose) this.isReady = true;
         if (this.health <= 0){
-            console.log(this.range)
-            this.range.body.label = null;
-            this.range.destroy();
-            this.hitbox.body.label = null;
-            this.hitbox.destroy();
-            console.log("a")
-            this.body.label = null;
-            this.destroy();
+            this.die()
         } 
+       
     }
 }

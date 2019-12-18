@@ -205,8 +205,8 @@ export default class Player extends Character{
     }
 
     reduceEnergy(){
-      this.lifebar.reduceBar(5)
-      this.reduceHealth(5);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
+      this.lifebar.reduceBar(50)
+      this.reduceHealth(50);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
     }
 
     preUpdate(t, d) {
@@ -245,7 +245,7 @@ export default class Player extends Character{
       }
 
       this.makeSpeedy();
-      //this.loseLife(t);
+      this.loseLife(t);
       this.attackSystem(t);
       this.dirx = this.scene.input.x - this.scene.scale.baseSize.width/2;
       this.diry = this.scene.input.y - this.scene.scale.baseSize.height/2;
@@ -258,5 +258,9 @@ export default class Player extends Character{
 
       if (this.forceDir.x < 0) this.facing = -1;
       else this.facing = 1;
+      if (this.health <= 0){
+        this.scene.scene.start('menu')
+      } 
+      console.log("a")
     }
 }
