@@ -26,8 +26,6 @@ export default class GameOver extends Phaser.Scene {
         fontFamily: 'font'});
         a.scaleX *= 4;
         a.scaleY *= 4;
-
-      
   }
 
   update(time, delta) {
