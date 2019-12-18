@@ -260,6 +260,5 @@ export default class Player extends Character{
       if (this.health <= 0){
         this.scene.scene.start('menu')
       } 
-      console.log("a")
     }
 }

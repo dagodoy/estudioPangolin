@@ -143,7 +143,6 @@ export default class Enemy extends Character{
                 //Se puede poner un pequeño delay sin complicar mucho las cosas
                 if (this.facing == 1) super.playAnimation('enemy_right_atk');
                 else super.playAnimation('enemy_left_atk');
-
                 if(t - this.attackCD > this.attackDelay){
                     this.hitbox.active = true;
                     this.attackCD = t;
