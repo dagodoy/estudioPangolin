@@ -17,7 +17,10 @@ export default class Game extends Phaser.Scene {
 
     this.cwall = this.matter.world.nextCategory();
     
-    this.load.image('plane', 'planetransparent.png')
+    this.load.image('plane', 'planetransparent.png');
+    this.load.image('lifebar_front', 'lifebar_front.png');
+    this.load.image('lifebar_back', 'lifebar_back.png');
+    this.load.image('lifebar', 'lifebar_content.png');
     this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
     this.load.atlas('enemy', 'enemyatlas.png', 'enemyatlas_atlas.json');
     this.load.atlas('attack', 'cut_atlas.png', 'cut_atlas_atlas.json');
