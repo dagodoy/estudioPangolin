@@ -27,6 +27,7 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
   reduceHealth(damage){
     this.health -= damage;
     if (this.health < 0) this.health = 0;
+    console.log(this.health);
   }
   heal(healing){
     this.health += healing;

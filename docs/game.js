@@ -79,6 +79,7 @@ export default class Game extends Phaser.Scene {
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
             if (pairs[i].bodyB.gameObject.active){
               pairs[i].bodyA.gameObject.reduceHealth(pairs[i].bodyB.gameObject.character.atkDmg);
+              pairs[i].bodyA.gameObject.lifebar.reduceBar(pairs[i].bodyB.gameObject.character.atkDmg);
             } 
           }
         }

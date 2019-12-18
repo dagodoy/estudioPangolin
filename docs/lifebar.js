@@ -15,6 +15,7 @@ export default class Lifebar extends Phaser.Physics.Matter.Sprite {
     //restar ese porcentaje a la imagen
     this.percent = this.width*this.relation;
     this.width = this.width-this.percent;
+    //cambiar el tamaño y posición de la imagen
     this.setDisplaySize(5*(this.width), 5*(this.height));
     this.setPosition(this.x-5*(this.percent/2), this.y)
     
