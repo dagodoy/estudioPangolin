@@ -245,7 +245,7 @@ export default class Player extends Character{
       }
 
       this.makeSpeedy();
-      //this.loseLife(t);
+      this.loseLife(t);
       this.attackSystem(t);
       this.dirx = this.scene.input.x - this.scene.scale.baseSize.width/2;
       this.diry = this.scene.input.y - this.scene.scale.baseSize.height/2;
@@ -255,8 +255,8 @@ export default class Player extends Character{
       this.hitbox.moveHitbox(this.dirx, this.diry);
       this.range.moveHitboxStatic();  
 
-
       if (this.forceDir.x < 0) this.facing = -1;
       else this.facing = 1;
+      console.log(this.health);
     }
 }

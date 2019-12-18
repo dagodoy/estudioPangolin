@@ -37,7 +37,7 @@ export default class Game extends Phaser.Scene {
     })
     this.map.addTilesetImage('tileset_64', 'tileset');
 
-    this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
+    this.player = new Player(this, 900, 400, 500, 5, 1, 10, 'vampire');
     this.enemy = new Enemy(this, 1000, 500, 10, 0, 1, 10, 'enemy');
     
     
