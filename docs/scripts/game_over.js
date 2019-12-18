@@ -29,7 +29,7 @@ export default class GameOver extends Phaser.Scene {
 
 changeScene(){
   console.log('e');
-  this.start('main');
+  this.scene.start('main');
 }
   update(time, delta) {
   }
