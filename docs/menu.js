@@ -11,7 +11,7 @@ export default class Menu extends Phaser.Scene {
   }
 
   update(time, delta) {
-      
+    console.log('e');
   }
 
 }

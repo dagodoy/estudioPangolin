@@ -6,23 +6,24 @@ export default class GameOver extends Phaser.Scene {
   }
   
   preload() {  
-    this.load.image('screen', 'GAME OVER.png');
+    this.screen = this.load.image('screen', 'game_over.png');
     this.load.atlas('vampire', 'vampireatlas.png', 'vampireatlas_atlas.json');
   }
 
   create() {
-    this.screen = this.add.image(0,0,'screen');
-    this.scene.anims.create({
-      key: 'die', 
-      frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
-      frameRate: 12,
-      repeat: -1})
-      this.play('die');
+    this.add.image(0, 0,'screen');
+    console.log(this.screen);
+    // this.scene.anims.create({
+    //   key: 'die', 
+    //   frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
+    //   frameRate: 12,
+    //   repeat: -1})
+    //   this.play('die');
   }
 
 
   update(time, delta) {
-      
+
   }
 
 }
