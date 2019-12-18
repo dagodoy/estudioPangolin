@@ -153,7 +153,7 @@ export default class Enemy extends Character{
                         this.canMove = true;
                     }
                 } 
-                if (this.isReady){      
+                if (this.isReady && (this.onPlayAnim !='enemy_right_dmg' || this.onPlayAnim !='enemy_left_dmg')){      
                     //Aquí hay que meter que se quede parado al principio de la animación
                     //La animación se reproduce antes del timer. Si el timer se aumenta queda raro y si se emte en el otro if solo dura 1 frame
                     //Se puede poner un pequeño delay sin complicar mucho las cosas
