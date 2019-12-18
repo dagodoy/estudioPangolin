@@ -27,8 +27,8 @@ export default class Menu extends Phaser.Scene {
   create() {
     let a = this.add.text(250, 0, 'Van Piro: Esiten', {
       fontFamily: 'font'});
-    a.scaleX *= 2;
-    a.scaleY *= 2;
+    a.scaleX *= 8;
+    a.scaleY *= 8;
     this.button = new Button(this, 700, 450, 'button', 'main');
     let b = this.add.text(610, 410, 'Start', {
       fontFamily: 'font'});
