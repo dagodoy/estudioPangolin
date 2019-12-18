@@ -57,6 +57,8 @@ export default class Game extends Phaser.Scene {
 
     let area = this.matter.add.rectangle(4250, 1500, 900, 1000,  null);
     this.room = new Room(this, 4330, 1500, 'plane', area, 6, 300)
+
+    console.log(this.malos[1].id)
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;

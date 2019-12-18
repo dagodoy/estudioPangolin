@@ -74,7 +74,7 @@ export default class Enemy extends Character{
 
         this.beingHit = false;
 
-        this.is = false;
+        this.is = true;
 
         this.setInteractive();
 
@@ -173,7 +173,11 @@ export default class Enemy extends Character{
                 this.biteImage.destroy()
                 this.die()
             }     
-        }   
+        }  
+        else{
+            this.moveCD = t;
+            this.attackCD = t;
+        }
     }
     endAnimation(animation){
         if (animation.key == 'enemy_right_dmg' || animation.key == 'enemy_left_dmg'){
