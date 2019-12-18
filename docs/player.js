@@ -65,8 +65,8 @@ export default class Player extends Character{
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
-        this.lifebar = new Lifebar(scene, 200, 50, this.maxHealth);
-
+        this.lifebar = new Lifebar(scene, 220, 75, this.maxHealth);
+        this.blood = 5;
         this.facing = 1;
 
         this.lifeDelay = 1000;
@@ -205,8 +205,8 @@ export default class Player extends Character{
     }
 
     reduceEnergy(){
-      this.lifebar.reduceBar(50)
-      this.reduceHealth(50);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
+      this.reduceHealth(this.blood);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
+      this.lifebar.reduceBar(this.blood)
     }
 
     preUpdate(t, d) {
@@ -254,7 +254,6 @@ export default class Player extends Character{
       this.forceDir.y = this.diry/this.mod;
       this.hitbox.moveHitbox(this.dirx, this.diry);
       this.range.moveHitboxStatic();  
-
 
       if (this.forceDir.x < 0) this.facing = -1;
       else this.facing = 1;

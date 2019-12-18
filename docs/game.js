@@ -37,9 +37,12 @@ export default class Game extends Phaser.Scene {
     })
     this.map.addTilesetImage('tileset_64', 'tileset');
 
+    this.lifebar_back = this.add.image(200, 50, 'lifebar_back');
+    this.lifebar_back.setScrollFactor(0,0);
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
+    this.lifebar_front = this.add.image(200, 50, 'lifebar_front');
+    this.lifebar_front.setScrollFactor(0,0);
     this.enemy = new Enemy(this, 1000, 500, 10, 0, 1, 10, 'enemy');
-    
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
@@ -81,6 +84,7 @@ export default class Game extends Phaser.Scene {
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
             if (pairs[i].bodyB.gameObject.active){
               pairs[i].bodyA.gameObject.reduceHealth(pairs[i].bodyB.gameObject.character.atkDmg);
+              pairs[i].bodyA.gameObject.lifebar.reduceBar(pairs[i].bodyB.gameObject.character.atkDmg);
             } 
           }
         }
