@@ -72,7 +72,9 @@ export default class Enemy extends Character{
         this.biteImage.visible = false;
         this.biteOffset = -50;
 
-        this.beingHit;
+        this.beingHit = false;
+
+        this.is = false;
 
         this.setInteractive();
 
@@ -122,54 +124,56 @@ export default class Enemy extends Character{
     }
 
     preUpdate(t, d) {
-        super.preUpdate(t,d);
-        if (this.hitbox.active){
-            this.hitbox.active = false;
-            this.isReady = false;
-        }
-        if (this.health < this.execute){
-            this.biteImage.visible = true;
-            this.biteImage.x = this.x;
-            this.biteImage.y = this.y + this.biteOffset;
-        }
-        this.dirx = this.scene.input.x - this.body.position.x;
-        this.diry = this.scene.input.y - this.body.position.y;
-        this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
-        this.range.moveHitboxStatic();
-        if (!this.stop){
-            if (this.canMove){
-                if (!this.isReady)this.moveTowards(this.scene.player.x, this.scene.player.y);
-                else this.setVelocity(0, 0);
+        if (this.is){
+            super.preUpdate(t,d);
+            if (this.hitbox.active){
+                this.hitbox.active = false;
+                this.isReady = false;
             }
-            else{
-                if (!this.hasBeenPushed){
-                    this.applyForce (this.forceDir);
-                    this.hasBeenPushed = true;
+            if (this.health < this.execute){
+                this.biteImage.visible = true;
+                this.biteImage.x = this.x;
+                this.biteImage.y = this.y + this.biteOffset;
+            }
+            this.dirx = this.scene.input.x - this.body.position.x;
+            this.diry = this.scene.input.y - this.body.position.y;
+            this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
+            this.range.moveHitboxStatic();
+            if (!this.stop){
+                if (this.canMove){
+                    if (!this.isReady)this.moveTowards(this.scene.player.x, this.scene.player.y);
+                    else this.setVelocity(0, 0);
                 }
-                if (t - this.moveCD > this.moveDelay){
-                    this.canMove = true;
-                }
-            } 
-            if (this.isReady){      
-                //Aquí hay que meter que se quede parado al principio de la animación
-                //La animación se reproduce antes del timer. Si el timer se aumenta queda raro y si se emte en el otro if solo dura 1 frame
-                //Se puede poner un pequeño delay sin complicar mucho las cosas
-                if (this.facing == 1) super.playAnimation('enemy_right_atk');
-                else super.playAnimation('enemy_left_atk');
-                if(t - this.attackCD > this.attackDelay){
-                    this.hitbox.active = true;
-                    this.attackCD = t;
-                }  
-            } 
-        }
-        if (!this.isReady || this.beingHit) this.attackCD = t;
-        if (this.canMove) this.moveCD = t;
-
-        if (this.isClose && !this.beingHit) this.isReady = true;
-        if (this.health <= 0){
-            this.biteImage.destroy()
-            this.die()
-        }     
+                else{
+                    if (!this.hasBeenPushed){
+                        this.applyForce (this.forceDir);
+                        this.hasBeenPushed = true;
+                    }
+                    if (t - this.moveCD > this.moveDelay){
+                        this.canMove = true;
+                    }
+                } 
+                if (this.isReady){      
+                    //Aquí hay que meter que se quede parado al principio de la animación
+                    //La animación se reproduce antes del timer. Si el timer se aumenta queda raro y si se emte en el otro if solo dura 1 frame
+                    //Se puede poner un pequeño delay sin complicar mucho las cosas
+                    if (this.facing == 1) super.playAnimation('enemy_right_atk');
+                    else super.playAnimation('enemy_left_atk');
+                    if(t - this.attackCD > this.attackDelay){
+                        this.hitbox.active = true;
+                        this.attackCD = t;
+                    }  
+                } 
+            }
+            if (!this.isReady || this.beingHit) this.attackCD = t;
+            if (this.canMove) this.moveCD = t;
+    
+            if (this.isClose && !this.beingHit) this.isReady = true;
+            if (this.health <= 0){
+                this.biteImage.destroy()
+                this.die()
+            }     
+        }   
     }
     endAnimation(animation){
         if (animation.key == 'enemy_right_dmg' || animation.key == 'enemy_left_dmg'){
