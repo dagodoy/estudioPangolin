@@ -65,7 +65,7 @@ export default class Player extends Character{
         this.inBattle = true;
         this.lifeFlag = true;
         this.speedy = false;
-        this.lifebar = new Lifebar(scene, 220, 75, this.maxHealth);
+        this.lifebar = new Lifebar(scene, 240, 75, this.maxHealth);
         this.blood = 5;
         this.facing = 1;
 
@@ -257,6 +257,5 @@ export default class Player extends Character{
 
       if (this.forceDir.x < 0) this.facing = -1;
       else this.facing = 1;
-      console.log(this.health);
     }
 }
