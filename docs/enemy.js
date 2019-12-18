@@ -68,6 +68,10 @@ export default class Enemy extends Character{
         this.forceDir = new Phaser.Math.Vector2(1, 1);
         this.hasBeenPushed = false;
 
+        this.biteImage = this.scene.add.image(0, 0, 'bite');
+        this.biteImage.visible = false;
+        this.biteOffset = -50;
+
         this.setInteractive();
 
         this.on("pointerdown", this.hasBeenBitten, this);
@@ -118,7 +122,12 @@ export default class Enemy extends Character{
         if (this.hitbox.active){
             this.hitbox.active = false;
             this.isReady = false;
-        }  
+        }
+        if (this.health < this.execute){
+            this.biteImage.visible = true;
+            this.biteImage.x = this.x;
+            this.biteImage.y = this.y + this.biteOffset;
+        }
         this.dirx = this.scene.input.x - this.body.position.x;
         this.diry = this.scene.input.y - this.body.position.y;
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
@@ -155,6 +164,7 @@ export default class Enemy extends Character{
 
         if (this.isClose) this.isReady = true;
         if (this.health <= 0){
+            this.biteImage.destroy()
             this.die()
         } 
        

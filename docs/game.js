@@ -26,6 +26,7 @@ export default class Game extends Phaser.Scene {
     this.load.atlas('attack', 'cut_atlas.png', 'cut_atlas_atlas.json');
     this.load.tilemapTiledJSON('map', 'map.json');
     this.load.image('tileset', 'tileset_64.png');
+    this.load.image('bite', 'bite.png')
 
   }
 
@@ -42,7 +43,7 @@ export default class Game extends Phaser.Scene {
     this.player = new Player(this, 900, 400, 100, 5, 1, 10, 'vampire');
     this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
     this.lifebar_front.setScrollFactor(0,0);
-    this.enemy = new Enemy(this, 1000, 500, 10, 0, 1, 10, 'enemy');
+    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
