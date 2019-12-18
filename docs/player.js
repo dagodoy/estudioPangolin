@@ -258,7 +258,7 @@ export default class Player extends Character{
       if (this.forceDir.x < 0) this.facing = -1;
       else this.facing = 1;
       if (this.health <= 0){
-        this.scene.scene.start('menu')
+        // this.scene.scene.start('game_over')
       } 
     }
 }
