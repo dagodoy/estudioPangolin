@@ -6,9 +6,10 @@ export default class GameOver extends Phaser.Scene {
   }
   
   preload() {  
+    this.load.bitmapFont('font', 'fonts/font.ttf');
     this.load.image('screen', 'images/game_over.png');
     this.load.atlas('vampire', 'images/vampireatlas.png', 'json/vampireatlas_atlas.json');
-    this.load.image('button', 'images/button.jpg');
+    this.load.image('button', 'images/button.png');
   }
 
   create() {
@@ -20,7 +21,12 @@ export default class GameOver extends Phaser.Scene {
       frames: this.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
       frameRate: 6})
       this.vampire.play('die');
-    this.button = new Button(this, 700, 700, 'button', 'menu');
+      this.button = new Button(this, 700, 600, 'button', 'menu');
+      let a = this.add.text(480, 565, 'Menú Principal', {
+        fontFamily: 'font'});
+        a.scaleX *= 4;
+        a.scaleY *= 4;
+
       
   }
 

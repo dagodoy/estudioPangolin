@@ -22,7 +22,7 @@ export default class Menu extends Phaser.Scene {
 
   preload() {  
     this.load.bitmapFont('font', 'fonts/font.ttf');
-    this.load.image('button', 'images/button.jpg');
+    this.load.image('button', 'images/button.png');
   }
 
   create() {
@@ -31,7 +31,12 @@ export default class Menu extends Phaser.Scene {
       fontFamily: 'font'});
     a.scaleX *= 8;
     a.scaleY *= 8;
-    this.button = new Button(this, 700, 700, 'button', 'main');
+    this.button = new Button(this, 700, 450, 'button', 'main');
+    let b = this.add.text(610, 410, 'Start', {
+      fontFamily: 'font'});
+      b.scaleX *= 5;
+      b.scaleY *= 5;
+    
   }
 
   update(time, delta) {
