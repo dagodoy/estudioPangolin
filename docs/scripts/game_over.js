@@ -1,4 +1,4 @@
-
+import Button from "./button.js";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
@@ -20,24 +20,11 @@ export default class GameOver extends Phaser.Scene {
       frames: this.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
       frameRate: 6})
       this.vampire.play('die');
-    this.button = new Button(this, 700, 500, 'button');
+    this.button = new Button(this, 700, 700, 'button', 'menu');
       
   }
 
   update(time, delta) {
   }
 
-}
-
-export default class Button extends Phaser.GameObject.Sprite{
-  constructor(scene, x, y, sprite){
-    super(scene, x, y, sprite)
-    this.on("pointerdown", this.changeScene, this);
-    this.setInteractive();
-    
-  }
-  changeScene(){
-    console.log('e');
-    //this.scene.start('main');
-  }
 }
