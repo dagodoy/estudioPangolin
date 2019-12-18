@@ -103,7 +103,7 @@ export default class Enemy extends Character{
         }
     }
     hasBeenBitten(){
-        if (this.scene.input.activePointer.rightButtonDown() && this.isInRange && this.health < this.execute){
+        if (this.scene.input.activePointer.rightButtonDown() && this.isInRange && this.health < this.execute && !this.stop){
             this.stop = true;
             this.reduceHealth(1000);
             this.scene.player.x = this.x;
@@ -115,6 +115,10 @@ export default class Enemy extends Character{
 
     preUpdate(t, d) {
         super.preUpdate(t,d);
+        if (this.hitbox.active){
+            this.hitbox.active = false;
+            this.isReady = false;
+        }  
         this.dirx = this.scene.input.x - this.body.position.x;
         this.diry = this.scene.input.y - this.body.position.y;
         this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
@@ -150,10 +154,16 @@ export default class Enemy extends Character{
         else this.damageCD = t;
         if (this.canMove) this.moveCD = t;
 
-        if (this.hitbox.active){
-            this.hitbox.active = false;
-            this.isReady = false;
-        }  
         if (this.isClose) this.isReady = true;
+        if (this.health <= 0){
+            console.log(this.range)
+            this.range.body.label = null;
+            this.range.destroy();
+            this.hitbox.body.label = null;
+            this.hitbox.destroy();
+            console.log("a")
+            this.body.label = null;
+            this.destroy();
+        } 
     }
 }

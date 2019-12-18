@@ -245,11 +245,11 @@ export default class Player extends Character{
       }
 
       this.makeSpeedy();
-      this.loseLife(t);
+      //this.loseLife(t);
       this.attackSystem(t);
       this.dirx = this.scene.input.x - this.scene.scale.baseSize.width/2;
       this.diry = this.scene.input.y - this.scene.scale.baseSize.height/2;
-      this.mod = (Math.sqrt(this.dirx*this.dirx + this.diry*this.diry)) * 10
+      this.mod = (Math.sqrt(this.dirx*this.dirx + this.diry*this.diry)) * 10;
       this.forceDir.x = this.dirx/this.mod;
       this.forceDir.y = this.diry/this.mod;
       this.hitbox.moveHitbox(this.dirx, this.diry);
