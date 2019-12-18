@@ -66,7 +66,7 @@ export default class Player extends Character{
         this.lifeFlag = true;
         this.speedy = false;
         this.lifebar = new Lifebar(scene, 240, 75, this.maxHealth);
-        this.blood = 5;
+        this.blood = 0;
         this.facing = 1;
         this.hitboxFacing = 1;
 
