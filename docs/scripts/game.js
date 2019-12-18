@@ -41,7 +41,9 @@ export default class Game extends Phaser.Scene {
     this.tileset.wallLayer = this.map.createStaticLayer('wall', this.tileset);
     this.tileset.background2 = this.map.createStaticLayer('background2', this.tileset);
     this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
+    // this.tileset.rocksLayer = this.map.createStaticLayer('rocks', this.tileset);
     this.tileset.wallLayer.setCollisionBetween(0,999);
+    // this.tileset.rocksLayer.setCollisionBetween(0,999);
 
 
     this.lifebar_back = this.add.image(220, 50, 'lifebar_back');
@@ -68,7 +70,7 @@ export default class Game extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
     //Asignar qué colisiona con qué
-    this.player.setCollidesWith([this.cwall, this.cehitbox, (0,999)]);
+    this.player.setCollidesWith([this.cwall, this.cehitbox, (0,999)]);    //usar esta línea para que deje de colisionar con los muros
     this.player.hitbox.setCollidesWith([this.cenemy]);
 
     this.enemy.setCollidesWith([this.cphitbox, this.cwall, (0,999)]);
