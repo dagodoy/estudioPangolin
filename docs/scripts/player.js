@@ -68,6 +68,7 @@ export default class Player extends Character{
         this.lifebar = new Lifebar(scene, 240, 75, this.maxHealth);
         this.blood = 5;
         this.facing = 1;
+        this.hitboxFacing = 1;
 
         this.lifeDelay = 1000;
         this.lifeCD = 0;
@@ -112,10 +113,12 @@ export default class Player extends Character{
     playerController(){
 
       if (this.a.isDown) {
+        this.facing = -1;
         this.setVelocityX(-this.speed);
       }
       else {
         if (this.d.isDown) {
+          this.facing = 1;
           this.setVelocityX(this.speed);
         }
         else {
@@ -154,7 +157,7 @@ export default class Player extends Character{
         this.forceDir.y = this.diry/this.mod;
         this.applyForce(this.forceDir);
         this.canMove = false;
-        if (this.facing == 1) super.playAnimation('vamp_right_atk');
+        if (this.hitboxFacing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
       }
     }
@@ -255,8 +258,8 @@ export default class Player extends Character{
       this.hitbox.moveHitbox(this.dirx, this.diry);
       this.range.moveHitboxStatic();  
 
-      if (this.forceDir.x < 0) this.facing = -1;
-      else this.facing = 1;
+      if (this.forceDir.x < 0) this.hitboxFacing = -1;
+      else this.hitboxFacing = 1;
       if (this.health <= 0){
         this.scene.scene.start('game_over');
       } 

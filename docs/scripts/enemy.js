@@ -72,9 +72,12 @@ export default class Enemy extends Character{
         this.biteImage.visible = false;
         this.biteOffset = -50;
 
+        this.beingHit;
+
         this.setInteractive();
 
         this.on("pointerdown", this.hasBeenBitten, this);
+        this.on("animationcomplete", this.endAnimation, this);
     }
 
 
@@ -92,7 +95,6 @@ export default class Enemy extends Character{
             this.setVelocityX(this.speed * Math.cos(alpha));
             this.setVelocityY(this.speed * Math.sin(alpha));
         }
-       
     }
     push(dir){
         if (this.canMove){
@@ -102,6 +104,7 @@ export default class Enemy extends Character{
             this.canMove = false;
             this.hitbox.active = false;
             this.isReady = false;
+            this.beingHit = true;
             if (this.facing == 1) super.playAnimation('enemy_right_dmg')
             else if (this.facing == -1) super.playAnimation('enemy_left_dmg')
         }
@@ -159,15 +162,18 @@ export default class Enemy extends Character{
                 }  
             } 
         }
-        if (!this.isReady) this.attackCD = t;
-        else this.damageCD = t;
+        if (!this.isReady || this.beingHit) this.attackCD = t;
         if (this.canMove) this.moveCD = t;
 
-        if (this.isClose) this.isReady = true;
+        if (this.isClose && !this.beingHit) this.isReady = true;
         if (this.health <= 0){
             this.biteImage.destroy()
             this.die()
+        }     
+    }
+    endAnimation(animation){
+        if (animation.key == 'enemy_right_dmg' || animation.key == 'enemy_left_dmg'){
+            this.beingHit = false;
         } 
-       
     }
 }
