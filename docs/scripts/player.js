@@ -62,7 +62,7 @@ export default class Player extends Character{
           frames: this.scene.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
           frameRate: 12,
 });
-        this.inBattle = true;
+        this.inBattle = false;
         this.lifeFlag = true;
         this.speedy = false;
         this.lifebar = new Lifebar(scene, 240, 75, this.maxHealth);
@@ -159,6 +159,7 @@ export default class Player extends Character{
         this.canMove = false;
         if (this.hitboxFacing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
+        console.log(this.x + " " + this.y)
       }
     }
     

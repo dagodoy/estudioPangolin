@@ -6,7 +6,7 @@ export default class Hitbox extends Phaser.Physics.Matter.Sprite {
         this.setExistingBody(area, true)
         this.character = character;
         this.offset = offset;
-        this.isAttack = isAttack;
+        this.isAttack = isAttack; 
         this.scene.add.existing(this);
         this.scene.matter.world.add(this);
 

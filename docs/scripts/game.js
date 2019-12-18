@@ -2,6 +2,7 @@ document.addEventListener('contextmenu', event=>event.preventDefault());
 import Player from "./player.js";
 import Enemy from "./enemy.js";
 import Wall from "./wall.js";
+import Room from "./room.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -48,10 +49,14 @@ export default class Game extends Phaser.Scene {
 
     this.lifebar_back = this.add.image(220, 50, 'lifebar_back');
     this.lifebar_back.setScrollFactor(0,0);
-    this.player = new Player(this, 2500, 1520, 100, 5, 1, 10, 'vampire');
+    this.player = new Player(this, 2500, 1520, 400, 5, 1, 10, 'vampire');
     this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
     this.lifebar_front.setScrollFactor(0,0);
     this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
+    this.malos = [];
+
+    let area = this.matter.add.rectangle(4250, 1500, 900, 1000,  null);
+    this.room = new Room(this, 4330, 1500, 'plane', area, 6, 300)
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
@@ -66,6 +71,7 @@ export default class Game extends Phaser.Scene {
     this.enemy.setCollisionCategory(this.cenemy);
     this.enemy.hitbox.setCollisionCategory(this.cehitbox);
     this.enemy.range.setCollisionCategory(this.cehitbox);
+    this.room.setCollisionCategory(this.cehitbox);
 
     this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
