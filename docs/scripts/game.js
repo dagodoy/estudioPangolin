@@ -36,7 +36,11 @@ export default class Game extends Phaser.Scene {
       tileWidth: 64,
       tileHeight: 64
     })
-    this.map.addTilesetImage('tileset_64', 'tileset');
+    this.tileset = this.map.addTilesetImage('tileset_64', 'tileset');
+    this.tileset.backgroundLayer = this.map.createStaticLayer('background', this.tileset);
+    this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
+    this.tileset.foregroundLayer.setCollisionBetween(0,999);
+
 
     this.lifebar_back = this.add.image(220, 50, 'lifebar_back');
     this.lifebar_back.setScrollFactor(0,0);
@@ -59,23 +63,24 @@ export default class Game extends Phaser.Scene {
     this.enemy.hitbox.setCollisionCategory(this.cehitbox);
     this.enemy.range.setCollisionCategory(this.cehitbox);
 
-    this.wall.setCollisionCategory(this.cwall);
+    this.matter.world.convertTilemapLayer(this.tileset.foregroundLayer);
+    console.log(this.tileset.foregroundLayer);
+    //this.matter.add.collider(this.player, this.foregroundLayer);
     
     //Asignar qué colisiona con qué
-    this.player.setCollidesWith([this.cwall, this.cehitbox]);
+    this.player.setCollidesWith([this.cwall, this.cehitbox, (0,999)]);
     this.player.hitbox.setCollidesWith([this.cenemy]);
 
-    this.enemy.setCollidesWith([this.cphitbox, this.cwall]);
+    this.enemy.setCollidesWith([this.cphitbox, this.cwall, (0,999)]);
     this.enemy.hitbox.setCollidesWith([this.cplayer]);
     this.enemy.range.setCollidesWith([this.cplayer]);
 
-    this.wall.setCollidesWith([this.cplayer, this.cenemy])
-    
-    
+    // this.foregroundLayer.setCollidesWith([this.cplayer, this.cenemy]);
+
     this.matter.world.on('collisionactive', function(event){ 
         let pairs = event.pairs;
         for (let i = 0; i < pairs.length; i++){
-          //console.log(pairs[i]);
+          console.log(pairs[i]);
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
             if (pairs[i].bodyA.gameObject.active){
               pairs[i].bodyB.gameObject.reduceHealth(pairs[i].bodyA.gameObject.character.atkDmg);          
@@ -114,7 +119,6 @@ export default class Game extends Phaser.Scene {
         }   
       }
     });
-
   }
 
   update(time, delta) {}
