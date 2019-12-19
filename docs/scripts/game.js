@@ -28,6 +28,7 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('final_64', 'json/final_64.json');
     this.load.image('tileset', 'images/tileset_64.png');
     this.load.image('bite', 'images/bite.png')
+    this.load.atlas('cut', 'images/cut.png', 'json/cut_atlas.json');
 
   }
 

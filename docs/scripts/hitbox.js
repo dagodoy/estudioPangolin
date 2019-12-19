@@ -2,6 +2,11 @@ export default class Hitbox extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y, offset, spriteSheet, character, area, isAttack) {
         super(scene.matter.world, x, y, spriteSheet);
     
+        this.scene.anims.create({
+            key: 'slash', 
+            frames: this.scene.anims.generateFrameNames('cut', {prefix: 'cut_a_', start: 0, end:6}),
+            frameRate: 12});
+
 
         this.setExistingBody(area, true)
         this.character = character;
@@ -24,7 +29,7 @@ export default class Hitbox extends Phaser.Physics.Matter.Sprite {
         this.y = this.character.body.position.y + this.offset;
     }
 
-    // playAnimation(anim){
-    //    this.play(anim);
-    // }
+    playAnimation(){
+        this.play('slash');
+    }
 }
