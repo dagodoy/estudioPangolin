@@ -35,7 +35,6 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
 
   playAnimation(anim){
     if (this.onPlayAnim != anim){
-
       this.play(anim);
       this.onPlayAnim = anim;
     }

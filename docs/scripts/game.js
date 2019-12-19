@@ -53,13 +53,6 @@ export default class Game extends Phaser.Scene {
     this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
     this.lifebar_front.setScrollFactor(0,0);
 
-    // this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
-    // this.enemy.setCollisionCategory(this.cenemy);
-    // this.enemy.hitbox.setCollisionCategory(this.cehitbox);
-    // this.enemy.range.setCollisionCategory(this.cehitbox);
-    // this.enemy.setCollidesWith([this.cphitbox, this.cwall, (0,999)]);
-    // this.enemy.hitbox.setCollidesWith([this.cplayer]);
-    // this.enemy.range.setCollidesWith([this.cplayer]);
     this.roomData = [{x:59, y: 14, w:15, h:17, e:6, r:300},
                     {x:113, y: 14, w:18, h:35, e:6, r:300},
                     {x:34, y: 30, w:14, h:14, e:6, r:300},
@@ -81,9 +74,6 @@ export default class Game extends Phaser.Scene {
     this.enemyCount = 0;
     this.rooms[this.currentRoom].generateEnemies();
 
-    //let area = this.matter.add.rectangle(4250, 1500, 900, 1000,  null);
-    //this.room = new Room(this, 'plane', area1, 6, 300)
-
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
@@ -98,10 +88,9 @@ export default class Game extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
     //Asignar qué colisiona con qué
-    this.player.setCollidesWith([this.cwall, this.cehitbox]);    //usar esta línea para que deje de colisionar con los muros
+    this.player.setCollidesWith([this.cwall, this.cehitbox, (0, 999)]);    //usar esta línea para que deje de colisionar con los muros
     this.player.hitbox.setCollidesWith([this.cenemy]);
 
-    // this.foregroundLayer.setCollidesWith([this.cplayer, this.cenemy]);
 
     this.matter.world.on('collisionactive', function(event){ 
         let pairs = event.pairs;
@@ -150,7 +139,7 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time, delta) {}
-  
+
   reduceCount(){
     this.enemyCount--;
     if (this.enemyCount <= 0){

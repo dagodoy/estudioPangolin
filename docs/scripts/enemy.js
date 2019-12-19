@@ -171,12 +171,14 @@ export default class Enemy extends Character{
 
                     if (this.facing == 1) super.playAnimation('enemy_right_atk');
                     else super.playAnimation('enemy_left_atk');
-                    this.hitbox.playAnimation();
+                    this.anims.pause(this.anims.currentAnim.frames[1]);
                     if(t - this.attackCD > this.attackDelay){
+                        this.anims.resume();
+                        //console.log(this.anims.currentAnim)
+                        this.hitbox.playAnimation();
                         this.hitbox.inGame = true;
                         this.attackCD = t;
                     }  
-                    
                     
                 } 
             }
