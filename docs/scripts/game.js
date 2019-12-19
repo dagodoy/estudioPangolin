@@ -15,8 +15,6 @@ export default class Game extends Phaser.Scene {
 
     this.cenemy = this.matter.world.nextCategory();   
     this.cehitbox = this.matter.world.nextCategory();
-
-    this.cwall = this.matter.world.nextCategory();
     
     this.load.image('plane', 'images/planetransparent.png');
     this.load.image('lifebar_front', 'images/lifebar_front.png');
@@ -91,7 +89,7 @@ export default class Game extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
     //Asignar qué colisiona con qué
-    this.player.setCollidesWith([this.cwall, this.cehitbox, (0, 999)]);    //usar esta línea para que deje de colisionar con los muros
+    this.player.setCollidesWith([this.cehitbox, (0, 999)]);    //usar esta línea para que deje de colisionar con los muros
     this.player.hitbox.setCollidesWith([this.cenemy]);
 
 
