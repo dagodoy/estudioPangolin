@@ -175,7 +175,7 @@ export default class Enemy extends Character{
                     if(t - this.attackCD > this.attackDelay){
                         this.anims.resume();
                         //console.log(this.anims.currentAnim)
-                        this.hitbox.playAnimation();
+                        this.hitbox.playAnimation(this.facing);
                         this.hitbox.inGame = true;
                         this.attackCD = t;
                     }  
