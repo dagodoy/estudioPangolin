@@ -99,7 +99,6 @@ export default class Enemy extends Character{
         }
     }
     push(dir){
-        
         if (this.canMove){
             if (this.facing == 1) super.playAnimation('enemy_right_dmg')
             else if (this.facing == -1) super.playAnimation('enemy_left_dmg')
@@ -107,7 +106,7 @@ export default class Enemy extends Character{
             this.setVelocity(0, 0);
             this.forceDir = dir
             this.canMove = false;
-            this.hitbox.active = false;
+            this.hitbox.inGame = false;
             this.isReady = false;
             this.beingHit = true;
             
@@ -128,8 +127,8 @@ export default class Enemy extends Character{
     preUpdate(t, d) {
         if (this.is){
             super.preUpdate(t,d);
-            if (this.hitbox.active){
-                this.hitbox.active = false;
+            if (this.hitbox.inGame){
+                this.hitbox.inGame = false;
                 this.isReady = false;
             }
             if (this.health < this.execute){
@@ -155,17 +154,17 @@ export default class Enemy extends Character{
                         this.canMove = true;
                     }
                 } 
-                if (this.isReady && (this.onPlayAnim !='enemy_right_dmg' || this.onPlayAnim !='enemy_left_dmg')){      
-                    //Aquí hay que meter que se quede parado al principio de la animación
-                    //La animación se reproduce antes del timer. Si el timer se aumenta queda raro y si se emte en el otro if solo dura 1 frame
-                    //Se puede poner un pequeño delay sin complicar mucho las cosas
+                if (this.isReady && (this.onPlayAnim !='enemy_right_dmg' || this.onPlayAnim !='enemy_left_dmg')){ 
+
                     if (this.facing == 1) super.playAnimation('enemy_right_atk');
                     else super.playAnimation('enemy_left_atk');
+                    this.hitbox.playAnimation();
                     if(t - this.attackCD > this.attackDelay){
-                        
-                        this.hitbox.active = true;
+                        this.hitbox.inGame = true;
                         this.attackCD = t;
                     }  
+                    
+                    
                 } 
             }
             if (!this.isReady || this.beingHit) this.attackCD = t;

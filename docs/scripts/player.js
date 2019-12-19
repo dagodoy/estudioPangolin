@@ -148,7 +148,7 @@ export default class Player extends Character{
 
 
       if (this.scene.input.activePointer.leftButtonDown() && this.attackControl){     
-        this.hitbox.active = true;
+        this.hitbox.inGame = true;
         this.attackControl = false;
         this.setVelocityX(0);
         this.setVelocityY(0);
@@ -245,7 +245,7 @@ export default class Player extends Character{
             this.canMove = true;
             this.moveCD = t;
           }
-          this.hitbox.active = false;
+          this.hitbox.inGame = false;
         }
       }
 
