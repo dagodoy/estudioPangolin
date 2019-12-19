@@ -263,7 +263,7 @@ export default class Player extends Character{
       if (this.forceDir.x < 0) this.hitboxFacing = -1;
       else this.hitboxFacing = 1;
       if (this.health <= 0){
-        this.scene.scene.start('game_over');
+        this.scene.scene.start('game_over', t);
       } 
     }
 }
