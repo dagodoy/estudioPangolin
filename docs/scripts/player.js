@@ -66,7 +66,7 @@ export default class Player extends Character{
         this.lifeFlag = true;
         this.speedy = false;
         this.lifebar = new Lifebar(scene, 240, 75, this.maxHealth);
-        this.blood = 5;
+        this.blood = 100;
         this.facing = 1;
         this.hitboxFacing = 1;
 
@@ -263,7 +263,7 @@ export default class Player extends Character{
       if (this.forceDir.x < 0) this.hitboxFacing = -1;
       else this.hitboxFacing = 1;
       if (this.health <= 0){
-        this.scene.scene.start('game_over');
+        this.scene.scene.start('game_over', t);
       } 
     }
 }
