@@ -178,6 +178,12 @@ export default class Player extends Character{
     makeSpeedy(){
       if(!this.inBattle && !this.speedy){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
         this.changeSpeed(this.speed);
+        console.log("b")
+      }
+      else if(this.inBattle && this.speedy){
+        this.changeSpeed(-this.speed/2)
+        this.speedy = false;
+        console.log("a")
       }
     }
 

@@ -123,10 +123,9 @@ export default class Game extends Phaser.Scene {
         if (pairs[i].bodyA.label === 'playerRange' && pairs[i].bodyB.label === 'enemy') {
           pairs[i].bodyB.gameObject.isInRange = true;
         }   
-        if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {
-          console.log(this.currentRoom)
-          if (pairs[i].bodyB.gameObject.numSala === this.scene.currentRoom){
-            pairs[i].bodyB.gameObject.begin();        
+        if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {          if (pairs[i].bodyB.gameObject.numSala === this.scene.currentRoom){
+            pairs[i].bodyB.gameObject.begin(); 
+            this.scene.player.inBattle = true;       
             this.scene.tileset.rocksLayer.renderFlags = 15;
             console.log(this.scene.tileset.rocksLayer.renderFlags)
           } 
@@ -157,6 +156,7 @@ export default class Game extends Phaser.Scene {
       }
       this.currentRoom = rnd;
       this.rooms[this.currentRoom].generateEnemies();
+      this.player.inBattle =false;
     }
   }
 }

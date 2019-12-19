@@ -62,7 +62,7 @@ export default class Enemy extends Character{
         this.damageCD = 0;
         this.attackSpd = 500;
 
-        this.execute = 50;
+        this.execute = 40;
         this.canMove = false;
         this.moveDelay = 230;
         this.moveCD = 0;
