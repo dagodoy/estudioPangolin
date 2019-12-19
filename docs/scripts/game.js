@@ -124,7 +124,8 @@ export default class Game extends Phaser.Scene {
           pairs[i].bodyB.gameObject.isInRange = true;
         }   
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {
-          if (this.pairs[i].bodyB.gameObject.numSala){
+          console.log(this.currentRoom)
+          if (pairs[i].bodyB.gameObject.numSala === this.scene.currentRoom){
             pairs[i].bodyB.gameObject.begin();        
             this.scene.tileset.rocksLayer.renderFlags = 15;
             console.log(this.scene.tileset.rocksLayer.renderFlags)
