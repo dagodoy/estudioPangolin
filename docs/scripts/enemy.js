@@ -33,13 +33,13 @@ export default class Enemy extends Character{
     this.scene.anims.create({
         key: 'enemy_right_dmg', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 78, end:81}),
-        frameRate: 6,
-        repeat: 1});
+        frameRate: 12,
+        repeat: 3});
     this.scene.anims.create({
         key: 'enemy_left_dmg', 
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 182, end:185}),
-        frameRate: 6,
-        repeat: 1});
+        frameRate: 12,
+        repeat:3});
     
 
         this.body.label = 'enemy';
@@ -99,7 +99,10 @@ export default class Enemy extends Character{
         }
     }
     push(dir){
+        
         if (this.canMove){
+            if (this.facing == 1) super.playAnimation('enemy_right_dmg')
+            else if (this.facing == -1) super.playAnimation('enemy_left_dmg')
             this.hasBeenPushed = false;
             this.setVelocity(0, 0);
             this.forceDir = dir
@@ -107,8 +110,7 @@ export default class Enemy extends Character{
             this.hitbox.active = false;
             this.isReady = false;
             this.beingHit = true;
-            if (this.facing == 1) super.playAnimation('enemy_right_dmg')
-            else if (this.facing == -1) super.playAnimation('enemy_left_dmg')
+            
         }
     }
     hasBeenBitten(){
@@ -160,6 +162,7 @@ export default class Enemy extends Character{
                     if (this.facing == 1) super.playAnimation('enemy_right_atk');
                     else super.playAnimation('enemy_left_atk');
                     if(t - this.attackCD > this.attackDelay){
+                        
                         this.hitbox.active = true;
                         this.attackCD = t;
                     }  
