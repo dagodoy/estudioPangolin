@@ -24,7 +24,6 @@ export default class Game extends Phaser.Scene {
     this.load.image('lifebar', 'images/lifebar_content.png');
     this.load.atlas('vampire', 'images/vampireatlas.png', 'json/vampireatlas_atlas.json');
     this.load.atlas('enemy', 'images/enemyatlas.png', 'json/enemyatlas_atlas.json');
-    this.load.atlas('attack', 'images/cut_atlas.png', 'json/cut_atlas_atlas.json');
     this.load.tilemapTiledJSON('final_64', 'json/final_64.json');
     this.load.image('tileset', 'images/tileset_64.png');
     this.load.image('bite', 'images/bite.png')
@@ -108,13 +107,13 @@ export default class Game extends Phaser.Scene {
         let pairs = event.pairs;
         for (let i = 0; i < pairs.length; i++){
           if (pairs[i].bodyA.label === 'playerHitbox' && pairs[i].bodyB.label === 'enemy') {
-            if (pairs[i].bodyA.gameObject.active){
+            if (pairs[i].bodyA.gameObject.inGame){
               pairs[i].bodyB.gameObject.reduceHealth(pairs[i].bodyA.gameObject.character.atkDmg);          
               pairs[i].bodyB.gameObject.push(pairs[i].bodyA.gameObject.character.forceDir);
             } 
           }
           else if(pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyHitbox'){
-            if (pairs[i].bodyB.gameObject.active){
+            if (pairs[i].bodyB.gameObject.inGame){
               pairs[i].bodyA.gameObject.reduceHealth(pairs[i].bodyB.gameObject.character.atkDmg);
               pairs[i].bodyA.gameObject.lifebar.reduceBar(pairs[i].bodyB.gameObject.character.atkDmg);
             } 

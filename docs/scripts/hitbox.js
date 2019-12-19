@@ -15,7 +15,7 @@ export default class Hitbox extends Phaser.Physics.Matter.Sprite {
         this.scene.add.existing(this);
         this.scene.matter.world.add(this);
 
-        this.active = false;
+        this.inGame = false;
         this.body.isSensor = true;
     }
     moveHitbox(dirx, diry){
@@ -31,5 +31,9 @@ export default class Hitbox extends Phaser.Physics.Matter.Sprite {
 
     playAnimation(){
         this.play('slash');
+    }
+
+    preUpdate(t,d){
+        super.preUpdate(t,d);
     }
 }
