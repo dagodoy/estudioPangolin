@@ -7,9 +7,12 @@ export default class Menu extends Phaser.Scene {
 
   preload() {  
         this.load.image('button', 'images/button.png');
+        this.load.image('menu', 'images/menu.png');
   }
 
   create() {
+    this.background = this.add.image(900,550,'menu');
+    this.background.setScale(2,2);
     let a = this.add.text(450, 100, 'Van Piro: Esiten', {
       fontFamily: 'font'});
     a.scaleX *= 8;
