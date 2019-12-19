@@ -112,7 +112,7 @@ export default class Enemy extends Character{
         }
     }
     hasBeenBitten(){
-        if (this.scene.input.activePointer.rightButtonDown() && this.isInRange && this.health < this.execute && !this.stop){
+        if (this.scene.input.activePointer.rightButtonDown() && this.isInRange && this.health <= this.execute && !this.stop){
             this.stop = true;
             this.reduceHealth(1000);
             this.scene.player.x = this.x;
@@ -142,7 +142,7 @@ export default class Enemy extends Character{
             if (this.hitbox.inGame){
                 this.hitbox.inGame = false;
             }
-            if (this.health < this.execute){a
+            if (this.health <= this.execute){
                 this.biteImage.visible = true;
                 this.biteImage.x = this.x;
                 this.biteImage.y = this.y + this.biteOffset;

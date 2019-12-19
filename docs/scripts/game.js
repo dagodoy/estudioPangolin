@@ -42,9 +42,10 @@ export default class Game extends Phaser.Scene {
     this.tileset.wallLayer = this.map.createStaticLayer('wall', this.tileset);
     this.tileset.background2 = this.map.createStaticLayer('background2', this.tileset);
     this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
-    // this.tileset.rocksLayer = this.map.createStaticLayer('rocks', this.tileset);
+    this.tileset.rocksLayer = this.map.createStaticLayer('rocks', this.tileset);
     this.tileset.wallLayer.setCollisionBetween(0,999);
-    // this.tileset.rocksLayer.setCollisionBetween(0,999);
+    this.tileset.rocksLayer.setCollisionBetween(0,999);
+    this.tileset.rocksLayer.renderFlags = 0;
 
 
     this.lifebar_back = this.add.image(600, 300, 'lifebar_back');
@@ -68,7 +69,7 @@ export default class Game extends Phaser.Scene {
                                                 this.roomData[i].w*this.map.tileWidth,
                                                 this.roomData[i].h*this.map.tileHeight,
                                                 null);
-      this.rooms[i] = new Room(this,'plane', this.areas[i], this.roomData[i].e, this.roomData[i].r);
+      this.rooms[i] = new Room(this,'plane', this.areas[i], this.roomData[i].e, this.roomData[i].r, i);
       this.rooms[i].setCollisionCategory(this.cehitbox);
     }
     this.malos = [];
@@ -123,7 +124,11 @@ export default class Game extends Phaser.Scene {
           pairs[i].bodyB.gameObject.isInRange = true;
         }   
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {
-          pairs[i].bodyB.gameObject.begin();
+          if (this.pairs[i].bodyB.gameObject.numSala){
+            pairs[i].bodyB.gameObject.begin();        
+            this.scene.tileset.rocksLayer.renderFlags = 15;
+            console.log(this.scene.tileset.rocksLayer.renderFlags)
+          } 
         } 
       }
     });
@@ -153,5 +158,4 @@ export default class Game extends Phaser.Scene {
       this.rooms[this.currentRoom].generateEnemies();
     }
   }
-
 }

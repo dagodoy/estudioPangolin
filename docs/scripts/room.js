@@ -1,9 +1,10 @@
 import Enemy from "./enemy.js"
 
 export default class Room extends Phaser.Physics.Matter.Sprite {
-    constructor(scene, spriteSheet, area, enemies, r) {
+    constructor(scene, spriteSheet, area, enemies, r, num) {
         super(scene.matter.world, 0, 0, spriteSheet);
     
+        this.numSala = num
         this.setExistingBody(area, true)
         this.scene.add.existing(this);
         this.scene.matter.world.add(this);
