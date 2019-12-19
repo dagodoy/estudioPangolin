@@ -47,10 +47,12 @@ export default class Game extends Phaser.Scene {
     // this.tileset.rocksLayer.setCollisionBetween(0,999);
 
 
-    this.lifebar_back = this.add.image(220, 50, 'lifebar_back');
+    this.lifebar_back = this.add.image(600, 300, 'lifebar_back');
+    this.lifebar_back.setScale(0.8,0.8);
     this.lifebar_back.setScrollFactor(0,0);
     this.player = new Player(this, 2500, 1520, 400, 5, 1, 10, 'vampire');
-    this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
+    this.lifebar_front = this.add.image(600, 300, 'lifebar_front');
+    this.lifebar_front.setScale(0.8,0.8);
     this.lifebar_front.setScrollFactor(0,0);
 
     this.roomData = [{x:59, y: 14, w:15, h:17, e:1, r:300},
@@ -78,7 +80,7 @@ export default class Game extends Phaser.Scene {
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
     this.cameras.main.startFollow(this.player);
-
+    this.cameras.main.setZoom(1.8);
 
     //Asignar categorías de colisión
     this.player.setCollisionCategory(this.cplayer);
