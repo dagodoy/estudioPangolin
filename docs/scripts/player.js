@@ -159,7 +159,7 @@ export default class Player extends Character{
         this.canMove = false;
         if (this.hitboxFacing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
-        this.hitbox.playAnimation();
+        this.hitbox.playAnimation(this.facing);
         console.log(this.x + " " + this.y)
       }
     }
