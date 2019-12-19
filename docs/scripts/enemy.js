@@ -93,13 +93,11 @@ export default class Enemy extends Character{
         var alpha = Math.atan((y-this.y)/(x-this.x));
         if (this.x > x){
             super.playAnimation('enemy_left_mov');
-            this.facing = -1;
             this.setVelocityX(-this.speed * Math.cos(alpha));
             this.setVelocityY(-this.speed * Math.sin(alpha));
         }
         else{
             super.playAnimation('enemy_right_mov');
-            this.facing = 1;
             this.setVelocityX(this.speed * Math.cos(alpha));
             this.setVelocityY(this.speed * Math.sin(alpha));
         }
@@ -149,13 +147,13 @@ export default class Enemy extends Character{
             if (this.hitbox.inGame){
                 this.hitbox.inGame = false;
             }
-            if (this.health < this.execute){
+            if (this.health < this.execute){a
                 this.biteImage.visible = true;
                 this.biteImage.x = this.x;
                 this.biteImage.y = this.y + this.biteOffset;
             }
-            this.dirx = this.scene.input.x - this.body.position.x;
-            this.diry = this.scene.input.y - this.body.position.y;
+            if (this.x > this.scene.player.x) this.facing = -1;
+            else this.facing = 1;
             this.hitbox.moveHitbox(this.scene.player.x - this.body.position.x, this.scene.player.y - this.body.position.y);   
             this.range.moveHitboxStatic();
             if (!this.stop){
@@ -178,6 +176,8 @@ export default class Enemy extends Character{
                     if (!this.isPlaying) this.anims.pause(this.anims.currentAnim.frames[1]);
                     if (t - this.animCD > this.animDelay){
                         this.anims.resume();
+                        if (this.facing == 1) super.playAnimation('enemy_right_atk');
+                        else super.playAnimation('enemy_left_atk');
                         this.animCD = t;
                         this.isPlaying = true;
                         this.hitbox.playAnimation(this.facing);
