@@ -32,19 +32,6 @@ export default class Character extends Phaser.Physics.Matter.Sprite {
     this.health += healing;
     if (this.health > this.maxHealth) this.health = this.maxHealth;
   }
-  die(){
-    this.range.body.label = null;
-    this.range.body.destroy();
-    this.range.destroy();
-
-    this.hitbox.body.label = null;
-    this.hitbox.body.destroy()
-    this.hitbox.destroy();
-
-
-    this.body.label = null;
-    this.destroy();
-  }
 
   playAnimation(anim){
     if (this.onPlayAnim != anim){

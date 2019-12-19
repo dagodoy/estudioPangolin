@@ -123,6 +123,19 @@ export default class Enemy extends Character{
             this.scene.player.lifebar.reduceBar(-20);
         }
     }
+    die(){
+        this.range.body.label = null;
+        this.range.body.destroy();
+        this.range.destroy();
+    
+        this.hitbox.body.label = null;
+        this.hitbox.body.destroy()
+        this.hitbox.destroy();
+    
+        this.scene.reduceCount();
+        this.body.label = null;
+        this.destroy();
+      }
 
     preUpdate(t, d) {
         if (this.is){

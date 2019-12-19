@@ -1,8 +1,8 @@
 import Enemy from "./enemy.js"
 
 export default class Room extends Phaser.Physics.Matter.Sprite {
-    constructor(scene, x, y, spriteSheet, area, enemies, r) {
-        super(scene.matter.world, x, y, spriteSheet);
+    constructor(scene, spriteSheet, area, enemies, r) {
+        super(scene.matter.world, 0, 0, spriteSheet);
     
         this.setExistingBody(area, true)
         this.scene.add.existing(this);
@@ -18,7 +18,6 @@ export default class Room extends Phaser.Physics.Matter.Sprite {
         this.active = false;
         this.body.isSensor = true;
         this.body.label = "room";
-        this.generateEnemies();
         }
     begin(){
         console.log("a")
@@ -29,10 +28,11 @@ export default class Room extends Phaser.Physics.Matter.Sprite {
     }
     generateEnemies(){
         for (let i = 0; i < this.enemies; i++){
-            this.scene.malos[i] = new Enemy(this.scene, this.spawnPoints[i].x, this.spawnPoints[i].y, 100, 0, 1, 10, 'enemy');
+            this.scene.malos[i] = new Enemy(this.scene, this.spawnPoints[i].x, this.spawnPoints[i].y, 100, 2, 1, 10, 'enemy');
             this.scene.malos[i].setCollisionCategory(this.scene.cenemy);
             this.scene.malos[i].hitbox.setCollisionCategory(this.scene.cehitbox);
             this.scene.malos[i].range.setCollisionCategory(this.scene.cehitbox);
         }
+        this.scene.enemyCount = this.enemies;
     }
 }
