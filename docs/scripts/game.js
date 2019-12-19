@@ -53,11 +53,37 @@ export default class Game extends Phaser.Scene {
     this.player = new Player(this, 2500, 1520, 400, 5, 1, 10, 'vampire');
     this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
     this.lifebar_front.setScrollFactor(0,0);
-    this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
-    this.malos = [];
 
-    let area = this.matter.add.rectangle(4250, 1500, 900, 1000,  null);
-    this.room = new Room(this, 4330, 1500, 'plane', area, 6, 300)
+    // this.enemy = new Enemy(this, 1000, 500, 100, 0, 1, 10, 'enemy');
+    // this.enemy.setCollisionCategory(this.cenemy);
+    // this.enemy.hitbox.setCollisionCategory(this.cehitbox);
+    // this.enemy.range.setCollisionCategory(this.cehitbox);
+    // this.enemy.setCollidesWith([this.cphitbox, this.cwall, (0,999)]);
+    // this.enemy.hitbox.setCollidesWith([this.cplayer]);
+    // this.enemy.range.setCollidesWith([this.cplayer]);
+    this.roomData = [{x:59, y: 14, w:15, h:17, e:6, r:300},
+                    {x:113, y: 14, w:18, h:35, e:6, r:300},
+                    {x:34, y: 30, w:14, h:14, e:6, r:300},
+                    {x:34, y: 62, w:15, h:13, e:6, r:300},
+                    {x:73, y: 51, w:35, h:25, e:6, r:300}];
+    this.areas = []
+    this.rooms = []
+    for (let i = 0; i < this.roomData.length; i++){
+      this.areas[i] = this.matter.add.rectangle(this.roomData[i].x*this.map.tileWidth + (this.roomData[i].w*this.map.tileWidth/2),
+                                                this.roomData[i].y*this.map.tileHeight + (this.roomData[i].h*this.map.tileHeight/2),
+                                                this.roomData[i].w*this.map.tileWidth,
+                                                this.roomData[i].h*this.map.tileHeight,
+                                                null);
+      this.rooms[i] = new Room(this,'plane', this.areas[i], this.roomData[i].e, this.roomData[i].r);
+      this.rooms[i].setCollisionCategory(this.cehitbox);
+    }
+    this.malos = [];
+    this.currentRoom = 0;
+    this.enemyCount = 0;
+    this.rooms[this.currentRoom].generateEnemies();
+
+    //let area = this.matter.add.rectangle(4250, 1500, 900, 1000,  null);
+    //this.room = new Room(this, 'plane', area1, 6, 300)
 
     
     this.wall = new Wall (this, 500, 500);
@@ -70,20 +96,11 @@ export default class Game extends Phaser.Scene {
     this.player.hitbox.setCollisionCategory(this.cphitbox);
     this.player.range.setCollisionCategory(this.cphitbox);
 
-    this.enemy.setCollisionCategory(this.cenemy);
-    this.enemy.hitbox.setCollisionCategory(this.cehitbox);
-    this.enemy.range.setCollisionCategory(this.cehitbox);
-    this.room.setCollisionCategory(this.cehitbox);
-
     this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
     //Asignar qué colisiona con qué
-    this.player.setCollidesWith([this.cwall, this.cehitbox, (0,999)]);    //usar esta línea para que deje de colisionar con los muros
+    this.player.setCollidesWith([this.cwall, this.cehitbox]);    //usar esta línea para que deje de colisionar con los muros
     this.player.hitbox.setCollidesWith([this.cenemy]);
-
-    this.enemy.setCollidesWith([this.cphitbox, this.cwall, (0,999)]);
-    this.enemy.hitbox.setCollidesWith([this.cplayer]);
-    this.enemy.range.setCollidesWith([this.cplayer]);
 
     // this.foregroundLayer.setCollidesWith([this.cplayer, this.cenemy]);
 
@@ -134,5 +151,17 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time, delta) {}
+  
+  reduceCount(){
+    this.enemyCount--;
+    if (this.enemyCount <= 0){
+      let rnd = Math.floor(Math.random() * 5);
+      while(rnd == this.currentRoom){
+        rnd = Math.floor(Math.random() * 5);
+      }
+      this.currentRoom = rnd;
+      this.rooms[this.currentRoom].generateEnemies();
+    }
+  }
 
 }
