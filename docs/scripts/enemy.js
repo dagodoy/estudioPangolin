@@ -66,7 +66,7 @@ export default class Enemy extends Character{
         this.isInRange = false;
 
         this.forceDir = new Phaser.Math.Vector2(1, 1);
-        this.hasBeenPushed = false;
+        this.hasBeenPushed = true;
 
         this.biteImage = this.scene.add.image(0, 0, 'bite');
         this.biteImage.visible = false;
@@ -74,7 +74,7 @@ export default class Enemy extends Character{
 
         this.beingHit = false;
 
-        this.is = true;
+        this.is = false;
 
         this.setInteractive();
 

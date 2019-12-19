@@ -58,7 +58,6 @@ export default class Game extends Phaser.Scene {
     let area = this.matter.add.rectangle(4250, 1500, 900, 1000,  null);
     this.room = new Room(this, 4330, 1500, 'plane', area, 6, 300)
 
-    console.log(this.malos[1].id)
     
     this.wall = new Wall (this, 500, 500);
     this.input.mouse.capture = true;
@@ -107,14 +106,17 @@ export default class Game extends Phaser.Scene {
 
     this.matter.world.on('collisionstart', function(event){
       let pairs = event.pairs;
-      //console.log(pairs);
       for (let i = 0; i < pairs.length; i++){
+        //console.log(pairs[i]);
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'enemyRange') {
           pairs[i].bodyB.gameObject.character.isClose = true;
         }   
         if (pairs[i].bodyA.label === 'playerRange' && pairs[i].bodyB.label === 'enemy') {
           pairs[i].bodyB.gameObject.isInRange = true;
         }   
+        if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {
+          pairs[i].bodyB.gameObject.begin();
+        } 
       }
     });
     this.matter.world.on('collisionend', function(event){
