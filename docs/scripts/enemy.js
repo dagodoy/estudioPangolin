@@ -72,11 +72,11 @@ export default class Enemy extends Character{
         this.biteImage.visible = false;
         this.biteOffset = -50;
 
-        this.beingHit = false;
-        this.attackAnim = false;
+        this.animCD = 0;
+        this.animDelay = 1500;
 
+        this.isPlaying = false;
         this.is = false;
-
         this.setInteractive();
 
         this.on("pointerdown", this.hasBeenBitten, this);
@@ -143,7 +143,6 @@ export default class Enemy extends Character{
             super.preUpdate(t,d);
             if (this.hitbox.inGame){
                 this.hitbox.inGame = false;
-                this.isReady = false;
             }
             if (this.health < this.execute){
                 this.biteImage.visible = true;
@@ -167,27 +166,30 @@ export default class Enemy extends Character{
                     if (t - this.moveCD > this.moveDelay){
                         this.canMove = true;
                     }
-                } 
-                if (this.isReady && (this.onPlayAnim !='enemy_right_dmg' || this.onPlayAnim !='enemy_left_dmg')){ 
-                    if (!this.attackAnim)
-                    {
-                        if (this.facing == 1) super.playAnimation('enemy_right_atk');
-                        else super.playAnimation('enemy_left_atk');
-                        this.anims.pause(this.anims.currentAnim.frames[1]);
-                    }
-                    if(t - this.attackCD > this.attackDelay){
-                        this.attackAnim = true;
+                }
+                if (this.isReady){ 
+                    if (this.facing == 1) super.playAnimation('enemy_right_atk');
+                    else super.playAnimation('enemy_left_atk');
+                    if (!this.isPlaying) this.anims.pause(this.anims.currentAnim.frames[1]);
+                    if (t - this.animCD > this.animDelay){
                         this.anims.resume();
-                        //console.log(this.anims.currentAnim)
+                        this.animCD = t;
+                        this.isPlaying = true;
                         this.hitbox.playAnimation(this.facing);
                         this.hitbox.inGame = true;
+                    }
+                    if(t - this.attackCD > this.attackDelay){
+                        this.isReady = false;
+                        this.isPlaying = false;
                         this.attackCD = t;
-                    }  
-                    
+                    }
                 } 
             }
-            if (!this.isReady || this.beingHit) this.attackCD = t;
-            if (this.canMove) this.moveCD = t;
+            if (!this.isReady || this.beingHit){
+                this.animCD = t;
+                this.attackCD = t;
+            }
+             if (this.canMove) this.moveCD = t;
     
             if (this.isClose && !this.beingHit) this.isReady = true;
             if (this.health <= 0){
@@ -198,15 +200,12 @@ export default class Enemy extends Character{
         else{
             this.moveCD = t;
             this.attackCD = t;
+            this.animCD = t;
         }
     }
     endAnimation(animation){
         if (animation.key == 'enemy_right_dmg' || animation.key == 'enemy_left_dmg'){
             this.beingHit = false;
-        }
-        else if (animation.key == 'enemy_right_atk' || animation.key == 'enemy_left_atk'){
-            this.attackAnim = false;
-            console.log("a")
         }
     }
 }

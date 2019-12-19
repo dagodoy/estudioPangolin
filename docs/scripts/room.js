@@ -20,7 +20,6 @@ export default class Room extends Phaser.Physics.Matter.Sprite {
         this.body.label = "room";
         }
     begin(){
-        console.log("a")
         this.active = true;
         for (let i = 0; i < this.enemies; i++){
             this.scene.malos[i].is = true;
