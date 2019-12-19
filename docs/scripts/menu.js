@@ -5,32 +5,17 @@ export default class Menu extends Phaser.Scene {
     super({ key: 'menu' });
   }
 
-
-  // init ()
-  // {
-  //     var element = document.createElement('style');
-  
-  //     document.head.appendChild(element);
-  
-  //     var sheet = element.sheet;
-  
-  //     var styles = '@font-face { font-family: font; src:url("font.ttf")}\n';
-  
-  //     sheet.insertRule(styles, 0);
-  // }
-
-
   preload() {  
         this.load.image('button', 'images/button.png');
   }
 
   create() {
-    let a = this.add.text(250, 0, 'Van Piro: Esiten', {
+    let a = this.add.text(450, 100, 'Van Piro: Esiten', {
       fontFamily: 'font'});
     a.scaleX *= 8;
     a.scaleY *= 8;
-    this.button = new Button(this, 700, 450, 'button', 'main');
-    let b = this.add.text(610, 410, 'Start', {
+    this.button = new Button(this, 900, 620, 'button', 'main');
+    let b = this.add.text(810, 580, 'Start', {
       fontFamily: 'font'});
       b.scaleX *= 5;
       b.scaleY *= 5;

@@ -19,21 +19,21 @@ export default class GameOver extends Phaser.Scene {
 
   create() {
     this.mstoTime(this.time);
-    this.add.image(700, 400,'screen');
-    this.vampire = this.matter.add.sprite(700,300,'vampire');
+    this.add.image(900, 550,'screen');
+    this.vampire = this.matter.add.sprite(900,450,'vampire');
     this.vampire.setScale(5,5);
     this.anims.create({
       key: 'die', 
       frames: this.anims.generateFrameNames('vampire',  {prefix: 'vampire64_', start: 72, end:80}),
       frameRate: 6})
       this.vampire.play('die');
-      this.button = new Button(this, 700, 600, 'button', 'menu');
-      let a = this.add.text(480, 565, 'Menú Principal', {
+      this.button = new Button(this, 900, 850, 'button', 'menu');
+      let a = this.add.text(680, 815, 'Menú Principal', {
         fontFamily: 'font'});
         a.scaleX *= 4;
         a.scaleY *= 4;
 
-      let b = this.add.text(400, 200, this.text, {
+      let b = this.add.text(600, 350, this.text, {
         fontFamily: 'font'});
         b.scaleX *= 4;
         b.scaleY *= 4;
