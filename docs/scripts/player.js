@@ -86,7 +86,7 @@ export default class Player extends Character{
         this.comboResetter = 500;
         this.comboDuration = 3;
 
-        this.biteDuration = 1000;
+        this.biteDuration = 800;
         this.biteCD = 0;
 
         this.thrustDelay = 250;
@@ -210,7 +210,7 @@ export default class Player extends Character{
     }
 
     reduceEnergy(){
-      this.reduceHealth(this.blood);   //estaría mejor decir por constructora mediante una variable la cantidad constante a reducir
+      this.reduceHealth(this.blood);   
       this.lifebar.reduceBar(this.blood)
     }
 

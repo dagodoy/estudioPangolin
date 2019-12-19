@@ -147,7 +147,7 @@ export default class Enemy extends Character{
             if (this.hitbox.inGame){
                 this.hitbox.inGame = false;
             }
-            if (this.health < this.execute){a
+            if (this.health < this.execute){
                 this.biteImage.visible = true;
                 this.biteImage.x = this.x;
                 this.biteImage.y = this.y + this.biteOffset;
