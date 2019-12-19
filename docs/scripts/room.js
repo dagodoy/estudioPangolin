@@ -14,19 +14,17 @@ export default class Room extends Phaser.Physics.Matter.Sprite {
             this.spawnPoints[i].x = (this.body.bounds.max.x + this.body.bounds.min.x)/2 + r * Math.cos(2*i*Math.PI/enemies);
             this.spawnPoints[i].y = (this.body.bounds.max.y + this.body.bounds.min.y)/2 + r * Math.sin(2*i*Math.PI/enemies);
         }
-        console.log(this.spawnPoints)
+        //console.log(this.spawnPoints)
         this.active = false;
         this.body.isSensor = true;
-        this.on("collisionstart", function(){console.log("a")}, this)
+        this.body.label = "room";
         this.generateEnemies();
         }
-    begin(collision){
+    begin(){
         console.log("a")
-        if (collision.body.tag = "player"){
-            this.active = true;
-            for (let i = 0; i < this.enemies; i++){
-                this.scene.malos[i].is = true;
-            }
+        this.active = true;
+        for (let i = 0; i < this.enemies; i++){
+            this.scene.malos[i].is = true;
         }
     }
     generateEnemies(){
