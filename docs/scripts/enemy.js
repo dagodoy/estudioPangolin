@@ -73,6 +73,7 @@ export default class Enemy extends Character{
         this.biteOffset = -50;
 
         this.beingHit = false;
+        this.attackAnim = false;
 
         this.is = false;
 
@@ -168,11 +169,14 @@ export default class Enemy extends Character{
                     }
                 } 
                 if (this.isReady && (this.onPlayAnim !='enemy_right_dmg' || this.onPlayAnim !='enemy_left_dmg')){ 
-
-                    if (this.facing == 1) super.playAnimation('enemy_right_atk');
-                    else super.playAnimation('enemy_left_atk');
-                    this.anims.pause(this.anims.currentAnim.frames[1]);
+                    if (!this.attackAnim)
+                    {
+                        if (this.facing == 1) super.playAnimation('enemy_right_atk');
+                        else super.playAnimation('enemy_left_atk');
+                        this.anims.pause(this.anims.currentAnim.frames[1]);
+                    }
                     if(t - this.attackCD > this.attackDelay){
+                        this.attackAnim = true;
                         this.anims.resume();
                         //console.log(this.anims.currentAnim)
                         this.hitbox.playAnimation();
@@ -199,6 +203,10 @@ export default class Enemy extends Character{
     endAnimation(animation){
         if (animation.key == 'enemy_right_dmg' || animation.key == 'enemy_left_dmg'){
             this.beingHit = false;
-        } 
+        }
+        else if (animation.key == 'enemy_right_atk' || animation.key == 'enemy_left_atk'){
+            this.attackAnim = false;
+            console.log("a")
+        }
     }
 }

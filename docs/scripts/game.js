@@ -53,7 +53,7 @@ export default class Game extends Phaser.Scene {
     this.lifebar_front = this.add.image(220, 50, 'lifebar_front');
     this.lifebar_front.setScrollFactor(0,0);
 
-    this.roomData = [{x:59, y: 14, w:15, h:17, e:6, r:300},
+    this.roomData = [{x:59, y: 14, w:15, h:17, e:1, r:300},
                     {x:113, y: 14, w:18, h:35, e:6, r:300},
                     {x:34, y: 30, w:14, h:14, e:6, r:300},
                     {x:34, y: 62, w:15, h:13, e:6, r:300},
