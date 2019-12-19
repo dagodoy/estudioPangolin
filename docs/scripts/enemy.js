@@ -40,6 +40,11 @@ export default class Enemy extends Character{
         frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 182, end:185}),
         frameRate: 12,
         repeat:3});
+    this.scene.anims.create({
+        key: 'enemy_die', 
+        frames: this.scene.anims.generateFrameNames('enemy',  {prefix: 'enemy64_', start: 91, end:97}),
+        frameRate: 12,
+        repeat:3});
     
 
         this.body.label = 'enemy';
