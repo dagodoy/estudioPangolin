@@ -42,7 +42,7 @@ export default class Game extends Phaser.Scene {
     this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
     this.tileset.rocksLayer = this.map.createStaticLayer('rocks', this.tileset);
     this.tileset.wallLayer.setCollisionBetween(0,999);
-    this.tileset.rocksLayer.setCollisionBetween(0,999);
+    //this.tileset.rocksLayer.setCollisionBetween(0,999);
     this.tileset.rocksLayer.setVisible(false);
 
 
