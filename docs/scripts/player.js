@@ -109,6 +109,7 @@ export default class Player extends Character{
         this.isBiting = false;
 
         this.forceDir = new Phaser.Math.Vector2(0, 0);
+
     }
     playerController(){
 
@@ -190,7 +191,6 @@ export default class Player extends Character{
           if (this.comboCount === this.comboDuration){
             this.attackDelay = this.attackDelayBase;
             this.comboCount = 0;
-            console.log("a")
           } 
           this.comboCount++;
           this.attackControl = true;

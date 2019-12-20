@@ -32,7 +32,6 @@ export default class Room extends Phaser.Physics.Matter.Sprite {
             this.scene.malos[i].setCollisionCategory(this.scene.cenemy);
             this.scene.malos[i].hitbox.setCollisionCategory(this.scene.cehitbox);
             this.scene.malos[i].range.setCollisionCategory(this.scene.cehitbox);
-            this.scene.malos[i].setCollidesWith([this.scene.cphitbox, (0, 999)])
         }
         this.scene.enemyCount = this.enemies;
     }
