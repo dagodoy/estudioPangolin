@@ -6,6 +6,7 @@ export default class Lifebar extends Phaser.Physics.Matter.Sprite {
     this.setScrollFactor(0,0);  //no se mueve, se mantiene fija (UI)
     this.maxHealth = maxHealth;
     this.originalWidth = this.width;
+    this.originalPos = {x: this.x, y: this.y};
   }
 
 
@@ -13,6 +14,7 @@ export default class Lifebar extends Phaser.Physics.Matter.Sprite {
     if(health-life >= this.maxHealth){
       this.width = this.originalWidth;
       this.setDisplaySize(0.75*(this.width), 0.75*(this.height));
+      this.setPosition(this.originalPos.x, this.originalPos.y)
     }
     else{
       //sacar el porcentaje de daño con respecto a la vida total

@@ -40,11 +40,7 @@ export default class Game extends Phaser.Scene {
     this.tileset.wallLayer = this.map.createStaticLayer('wall', this.tileset);
     this.tileset.background2 = this.map.createStaticLayer('background2', this.tileset);
     this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
-    this.tileset.rocksLayer = this.map.createStaticLayer('rocks', this.tileset);
     this.tileset.wallLayer.setCollisionBetween(0,999);
-    this.tileset.rocksLayer.setCollisionBetween(0,999);
-    this.tileset.rocksLayer.setVisible(false);
-
 
     this.lifebar_back = this.add.image(600, 300, 'lifebar_back');
     this.lifebar_back.setScale(0.8,0.8);
@@ -76,8 +72,7 @@ export default class Game extends Phaser.Scene {
     this.rooms[this.currentRoom].generateEnemies();
 
     this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
-    this.matter.world.convertTilemapLayer(this.tileset.rocksLayer);
-    this.tileset.rocksLayer.setCollision([0, 1, 2, 3, 4, 5, 6], false);
+  
 
     this.input.mouse.capture = true;
     this.cameras.main.startFollow(this.player);
@@ -125,8 +120,6 @@ export default class Game extends Phaser.Scene {
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {          if (pairs[i].bodyB.gameObject.numSala === this.scene.currentRoom){
             pairs[i].bodyB.gameObject.begin(); 
             this.scene.player.inBattle = true;       
-            this.scene.tileset.rocksLayer.setVisible(true);
-            console.log(this.scene.tileset.rocksLayer.renderFlags)
           } 
         } 
       }
