@@ -42,6 +42,8 @@ export default class Game extends Phaser.Scene {
     this.tileset.foregroundLayer = this.map.createStaticLayer('foreground', this.tileset);
     this.tileset.wallLayer.setCollisionBetween(0,999);
 
+
+
     this.lifebar_back = this.add.image(600, 300, 'lifebar_back');
     this.lifebar_back.setScale(0.8,0.8);
     this.lifebar_back.setScrollFactor(0,0);

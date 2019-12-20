@@ -160,7 +160,6 @@ export default class Player extends Character{
         if (this.hitboxFacing == 1) super.playAnimation('vamp_right_atk');
         else super.playAnimation('vamp_left_atk');
         this.hitbox.playAnimation(this.facing);
-        console.log(this.x + " " + this.y)
       }
     }
     
@@ -178,12 +177,10 @@ export default class Player extends Character{
     makeSpeedy(){
       if(!this.inBattle && !this.speedy){   //para cambiar el booleano hay que hacer primero el sistema de zonas, no sé como lo cambiaremos aún
         this.changeSpeed(this.speed);
-        console.log("b")
       }
       else if(this.inBattle && this.speedy){
         this.changeSpeed(-this.speed/2)
         this.speedy = false;
-        console.log("a")
       }
     }
 
@@ -193,6 +190,7 @@ export default class Player extends Character{
           if (this.comboCount === this.comboDuration){
             this.attackDelay = this.attackDelayBase;
             this.comboCount = 0;
+            console.log("a")
           } 
           this.comboCount++;
           this.attackControl = true;
@@ -200,14 +198,16 @@ export default class Player extends Character{
           if (this.comboCount > this.comboDuration - 1){
             this.attackDelay = this.comboDelay;
           } 
+          console.log(this.comboCount)
           this.attackCD = t;
         }
         this.comboCD = t;
-        console.log
       }
       else{
         if (this.comboCount - 1 < this.comboDuration && t-this.comboCD > this.comboResetter){
           this.comboCount = 1;
+          this.attackDelay = this.attackDelayBase;
+
           this.comboCD = t;
         }   
         this.attackCD = t;
@@ -269,7 +269,6 @@ export default class Player extends Character{
       this.hitbox.moveHitbox(this.dirx, this.diry);
       this.range.moveHitboxStatic();  
 
-      console.log(this.health);
       if (this.forceDir.x < 0) this.hitboxFacing = -1;
       else this.hitboxFacing = 1;
       if (this.health <= 0){
