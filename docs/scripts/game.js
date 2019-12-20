@@ -1,7 +1,5 @@
 document.addEventListener('contextmenu', event=>event.preventDefault());
 import Player from "./player.js";
-import Enemy from "./enemy.js";
-import Wall from "./wall.js";
 import Room from "./room.js";
 
 export default class Game extends Phaser.Scene {

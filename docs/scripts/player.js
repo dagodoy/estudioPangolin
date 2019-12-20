@@ -198,7 +198,6 @@ export default class Player extends Character{
           if (this.comboCount > this.comboDuration - 1){
             this.attackDelay = this.comboDelay;
           } 
-          console.log(this.comboCount)
           this.attackCD = t;
         }
         this.comboCD = t;
