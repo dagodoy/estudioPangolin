@@ -102,7 +102,7 @@ export default class Player extends Character{
         this.body.label = 'player';
         this.hitbox.body.label = 'playerHitbox';
 
-        let area = this.scene.matter.add.circle(0, 0, 100,  null);
+        let area = this.scene.matter.add.circle(0, 0, 200,  null);
         this.range = new Hitbox(this.scene, this.x, this.y, 0, 'plane', this, area, false);
         this.range.body.label = 'playerRange';
 
@@ -203,6 +203,7 @@ export default class Player extends Character{
           this.attackCD = t;
         }
         this.comboCD = t;
+        console.log
       }
       else{
         if (this.comboCount - 1 < this.comboDuration && t-this.comboCD > this.comboResetter){
@@ -233,6 +234,8 @@ export default class Player extends Character{
           this.isBiting = false;
           this.biteCD = t;
         }
+        this.setVelocityX(0);
+        this.setVelocityY(0);
       }
       else{
         this.biteCD = t;

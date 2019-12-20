@@ -43,7 +43,7 @@ export default class Game extends Phaser.Scene {
     this.tileset.rocksLayer = this.map.createStaticLayer('rocks', this.tileset);
     this.tileset.wallLayer.setCollisionBetween(0,999);
     this.tileset.rocksLayer.setCollisionBetween(0,999);
-    this.tileset.rocksLayer.renderFlags = 0;
+    this.tileset.rocksLayer.setVisible(false);
 
 
     this.lifebar_back = this.add.image(600, 300, 'lifebar_back');
@@ -75,8 +75,10 @@ export default class Game extends Phaser.Scene {
     this.enemyCount = 0;
     this.rooms[this.currentRoom].generateEnemies();
 
-    
-    this.wall = new Wall (this, 500, 500);
+    this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
+    this.matter.world.convertTilemapLayer(this.tileset.rocksLayer);
+    this.tileset.rocksLayer.setCollision([0, 1, 2, 3, 4, 5, 6], false);
+
     this.input.mouse.capture = true;
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(1.8);
@@ -86,10 +88,9 @@ export default class Game extends Phaser.Scene {
     this.player.hitbox.setCollisionCategory(this.cphitbox);
     this.player.range.setCollisionCategory(this.cphitbox);
 
-    this.matter.world.convertTilemapLayer(this.tileset.wallLayer);
     
     //Asignar qué colisiona con qué
-    this.player.setCollidesWith([this.cehitbox, (0, 999)]);    //usar esta línea para que deje de colisionar con los muros
+    this.player.setCollidesWith([this.cehitbox, (0,999)]);    //usar esta línea para que deje de colisionar con los muros
     this.player.hitbox.setCollidesWith([this.cenemy]);
 
 
@@ -124,7 +125,7 @@ export default class Game extends Phaser.Scene {
         if (pairs[i].bodyA.label === 'player' && pairs[i].bodyB.label === 'room') {          if (pairs[i].bodyB.gameObject.numSala === this.scene.currentRoom){
             pairs[i].bodyB.gameObject.begin(); 
             this.scene.player.inBattle = true;       
-            this.scene.tileset.rocksLayer.renderFlags = 15;
+            this.scene.tileset.rocksLayer.setVisible(true);
             console.log(this.scene.tileset.rocksLayer.renderFlags)
           } 
         } 
