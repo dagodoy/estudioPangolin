@@ -45,12 +45,14 @@ export default class GameOver extends Phaser.Scene {
 
   mstoTime(duration){
         this.seconds = Math.floor((duration / 1000) % 60),
+        console.log(this.seconds);
         this.minutes = Math.floor((duration / (1000 * 60)) % 60),
         this.hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
     
       this.hours = (this.hours < 10) ? "0" + this.hours : this.hours;
       this.minutes = (this.minutes < 10) ? "0" + this.minutes : this.minutes;
       this.seconds = (this.seconds < 10) ? "0" + this.seconds : this.seconds;
+      console.log(this.seconds);
     
       this.text = 'Tiempo -> '+this.hours + ":" + this.minutes + ":" + this.seconds;
     }

@@ -9,8 +9,13 @@ export default class Lifebar extends Phaser.Physics.Matter.Sprite {
   }
 
 
-  reduceBar(life){
-    //sacar el porcentaje de daño con respecto a la vida total
+  reduceBar(life, health){
+    if(health-life >= this.maxHealth){
+      this.width = this.originalWidth;
+      this.setDisplaySize(0.75*(this.width), 0.75*(this.height));
+    }
+    else{
+      //sacar el porcentaje de daño con respecto a la vida total
     this.relation = life / this.maxHealth;
     //restar ese porcentaje a la imagen
     this.percent = this.originalWidth*this.relation;
@@ -18,5 +23,7 @@ export default class Lifebar extends Phaser.Physics.Matter.Sprite {
     //cambiar el tamaño y posición de la imagen
     this.setDisplaySize(0.75*(this.width), 0.75*(this.height));
     this.setPosition(this.x-(this.percent/2.75), this.y)
+    }
+    
   }
 }

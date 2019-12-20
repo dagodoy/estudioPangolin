@@ -217,7 +217,7 @@ export default class Player extends Character{
 
     reduceEnergy(){
       this.reduceHealth(this.blood);   
-      this.lifebar.reduceBar(this.blood)
+      this.lifebar.reduceBar(this.blood, this.health)
     }
 
     preUpdate(t, d) {
@@ -266,6 +266,7 @@ export default class Player extends Character{
       this.hitbox.moveHitbox(this.dirx, this.diry);
       this.range.moveHitboxStatic();  
 
+      console.log(this.health);
       if (this.forceDir.x < 0) this.hitboxFacing = -1;
       else this.hitboxFacing = 1;
       if (this.health <= 0){

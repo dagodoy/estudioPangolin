@@ -58,7 +58,7 @@ export default class Enemy extends Character{
         this.isAttacking = false;
         this.attackDelay = 2000;
         this.attackCD = 0; 
-
+        this.heal = 55;
         this.damageCD = 0;
         this.attackSpd = 500;
 
@@ -123,8 +123,8 @@ export default class Enemy extends Character{
             this.scene.player.x = this.x;
             this.scene.player.y = this.y;
             this.scene.player.isBiting = true;
-            this.scene.player.heal(20);
-            this.scene.player.lifebar.reduceBar(-20);
+            this.scene.player.heal(this.heal);
+            this.scene.player.lifebar.reduceBar(-this.heal, this.scene.player.health);
         }
     }
     die(){
